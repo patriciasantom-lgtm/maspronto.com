@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Pronto brand palette */
+  --color-ink:       #1A1A1A;
+  --color-lemon:     #F5FF6E;
+  --color-mint:      #A8E6CF;
+  --color-bubblegum: #FF6B9D;
+  --color-pebble:    #F5F0E8;
+
+  --color-cream:     #F5F0E8;
+
+  /* Semantic aliases */
+  --color-bg:        #F5F0E8;
+  --color-text:      #1A1A1A;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F5F0E8;
+  color: #1A1A1A;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography classes ─────────────────────────────────────── */
+/* H1 hero, prices, brand name */
+.font-fraunces {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+/* Headings, buttons, labels */
+.font-dm-sans-bold {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+}
+
+/* Body text */
+.font-dm-sans {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+}
+
+/* Map canvas titles */
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+}
+
+/* ── Button base ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.18);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Ink on Lemon (buy action) */
+.btn-buy {
+  background: #F5FF6E;
+  color: #1A1A1A;
+}
+
+/* Lemon on Ink (primary nav/general) */
+.btn-primary {
+  background: #1A1A1A;
+  color: #F5FF6E;
+}
+
+/* Outline Ink */
+.btn-secondary {
+  background: transparent;
+  color: #1A1A1A;
+  border: 2px solid #1A1A1A;
+}
+
+/* ── Range input ─────────────────────────────────────────────── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  background: #E5E7EB;
+  outline: none;
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #1A1A1A;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(26,26,26,0.3);
+}
+input[type='range']::-moz-range-thumb {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #1A1A1A;
+  border: none;
+  box-shadow: 0 2px 8px rgba(26,26,26,0.3);
+}
+
+/* ── Theme icon hover swap ───────────────────────────────────── */
+.theme-icon-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.theme-icon-wrap img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+.theme-icon-bw    { opacity: 1; mix-blend-mode: multiply; }
+.theme-icon-colour { opacity: 0; mix-blend-mode: multiply; }
+.theme-card:hover .theme-icon-bw    { opacity: 0; }
+.theme-card:hover .theme-icon-colour { opacity: 1; }
+
