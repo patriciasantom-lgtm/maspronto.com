@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
+import { useLocalPrice, formatLocal } from '@/lib/useLocalPrice'
 import { useRouter } from '@/i18n/navigation'
 import Image from 'next/image'
 import StepIndicator from '@/components/StepIndicator'
@@ -40,6 +41,9 @@ export default function DetailsPage() {
   const [config, setConfig] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const local = useLocalPrice()
+  const audCentsDigital = parseInt(process.env.NEXT_PUBLIC_PRICE_DIGITAL || '990')
+  const audCentsKit     = parseInt(process.env.NEXT_PUBLIC_PRICE_KIT     || '4990')
 
   const [form, setForm] = useState({
     name: '', email: '', line1: '', line2: '', suburb: '', state: '', postcode: '',
@@ -121,6 +125,11 @@ export default function DetailsPage() {
                 {product === 'digital'
                   ? `${tp('digital_name')}, ${tp('digital_price')} ${tp('digital_currency')}`
                   : `${tp('kit_name')}, ${tp('kit_price')} ${tp('kit_currency')}`}
+                {local && (
+                  <span className="ml-1">
+                    · {formatLocal(product === 'digital' ? audCentsDigital : audCentsKit, local)} approx.
+                  </span>
+                )}
               </p>
             </div>
           </div>
@@ -174,11 +183,18 @@ export default function DetailsPage() {
       {/* Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-ink/10 p-4 z-40">
         <div className="max-w-lg mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-dm-sans text-sm text-ink/60">
-            {product === 'digital'
-              ? `${tp('digital_name')}, ${tp('digital_price')} ${tp('digital_currency')}`
-              : `${tp('kit_name')}, ${tp('kit_price')} ${tp('kit_currency')} · ${t('shipping_days')}`}
-          </p>
+          <div className="font-dm-sans text-sm text-ink/60">
+            <p>
+              {product === 'digital'
+                ? `${tp('digital_name')}, ${tp('digital_price')} ${tp('digital_currency')}`
+                : `${tp('kit_name')}, ${tp('kit_price')} ${tp('kit_currency')} · ${t('shipping_days')}`}
+            </p>
+            {local && (
+              <p className="text-xs text-ink/40">
+                {formatLocal(product === 'digital' ? audCentsDigital : audCentsKit, local)} · Approx. Charged in AUD.
+              </p>
+            )}
+          </div>
           <button
             onClick={handlePay}
             disabled={!isValid() || loading}

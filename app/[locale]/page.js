@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import MapCarousel from '@/components/MapCarousel'
+import LocalPriceTag from '@/components/LocalPriceTag'
 
 const MAP_ICONS = [
   // TODO: add colour version for Space when ready
@@ -226,6 +227,7 @@ export default async function HomePage() {
                 {t('pricing_digital_price')}
                 <span className="font-dm-sans text-base text-ink/40 ml-1">{t('pricing_digital_currency')}</span>
               </p>
+              <LocalPriceTag audCents={parseInt(process.env.NEXT_PUBLIC_PRICE_DIGITAL || '990')} />
               <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_digital_title')}</h3>
               <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_digital_desc')}</p>
               <ul className="space-y-2.5 mb-8 flex-1">
@@ -249,6 +251,7 @@ export default async function HomePage() {
                 {t('pricing_kit_price')}
                 <span className="font-dm-sans text-base text-ink/40 ml-1">{t('pricing_kit_currency')}</span>
               </p>
+              <LocalPriceTag audCents={parseInt(process.env.NEXT_PUBLIC_PRICE_KIT || '4990')} />
               <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_kit_title')}</h3>
               <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_kit_desc')}</p>
               <ul className="space-y-2.5 mb-8 flex-1">

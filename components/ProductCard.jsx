@@ -1,10 +1,16 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useLocalPrice, formatLocal } from '@/lib/useLocalPrice'
 
 export default function ProductCard({ type, selected, onSelect }) {
   const t = useTranslations('products')
   const isDigital = type === 'digital'
+  const local = useLocalPrice()
+  const audCents = isDigital
+    ? parseInt(process.env.NEXT_PUBLIC_PRICE_DIGITAL || '990')
+    : parseInt(process.env.NEXT_PUBLIC_PRICE_KIT || '4990')
+  const localLabel = formatLocal(audCents, local)
 
   return (
     <button
@@ -41,13 +47,20 @@ export default function ProductCard({ type, selected, onSelect }) {
         </div>
 
         {/* Price */}
-        <div className="mt-3 flex items-baseline gap-1">
-          <span className="font-fraunces text-4xl leading-none">
-            {isDigital ? t('digital_price') : t('kit_price')}
-          </span>
-          <span className="font-dm-sans text-sm opacity-70">
-            {isDigital ? t('digital_currency') : t('kit_currency')}
-          </span>
+        <div className="mt-3">
+          <div className="flex items-baseline gap-1">
+            <span className="font-fraunces text-4xl leading-none">
+              {isDigital ? t('digital_price') : t('kit_price')}
+            </span>
+            <span className="font-dm-sans text-sm opacity-70">
+              {isDigital ? t('digital_currency') : t('kit_currency')}
+            </span>
+          </div>
+          {localLabel && (
+            <p className="font-dm-sans text-xs opacity-60 mt-0.5">
+              {localLabel} <span className="opacity-70">· Approx. Charged in AUD.</span>
+            </p>
+          )}
         </div>
       </div>
 
