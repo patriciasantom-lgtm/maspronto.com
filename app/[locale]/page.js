@@ -1,7 +1,8 @@
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import MapCarousel from '@/components/MapCarousel'
+import ThemeCarousel from '@/components/ThemeCarousel'
 import LocalPriceTag from '@/components/LocalPriceTag'
 
 const MAP_ICONS = [
@@ -17,6 +18,7 @@ const MAP_ICONS = [
 ]
 
 export default async function HomePage() {
+  const locale = await getLocale()
   const t    = await getTranslations('home')
   const tH   = await getTranslations('hero')
   const tMT  = await getTranslations('mapThemes')
@@ -44,7 +46,7 @@ export default async function HomePage() {
                 {tH('cta_primary')}
               </Link>
               <Link href="/how-it-works" className="btn border-2 border-mint/40 text-mint hover:border-mint hover:text-lemon px-8 py-4 text-base">
-                {tH('cta_secondary')} ↓
+                {tH('cta_secondary')}
               </Link>
             </div>
           </div>
@@ -178,6 +180,19 @@ export default async function HomePage() {
             </div>
             <CharacterGrid />
           </div>
+        </div>
+      </section>
+
+      {/* ── 5b. Theme Carousel ──────────────────────────────────── */}
+      <section className="bg-pebble py-16 px-4">
+        <div className="max-w-sm mx-auto text-center">
+          <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-2">
+            {locale === 'en' ? 'Pick your path' : 'Elegí tu camino'}
+          </p>
+          <h3 className="font-fraunces text-3xl text-ink mb-8">
+            {locale === 'en' ? 'Choose your theme' : 'Elegí tu tema'}
+          </h3>
+          <ThemeCarousel />
         </div>
       </section>
 

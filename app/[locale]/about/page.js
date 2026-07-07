@@ -15,7 +15,7 @@ export default async function AboutPage() {
         <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
           {t('eyebrow')}
         </p>
-        <h1 className="font-fraunces text-5xl sm:text-6xl text-lemon">
+        <h1 className="font-fraunces text-5xl sm:text-6xl text-lemon max-w-2xl mx-auto">
           {t('h1')}
         </h1>
       </div>
@@ -49,9 +49,9 @@ export default async function AboutPage() {
           {t('body5')}
         </p>
 
-        {/* Pull Quote 2 — lemon bg, dialogue */}
-        <blockquote className="bg-lemon rounded-2xl px-8 py-8 my-4">
-          <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-loose text-center">
+        {/* Pull Quote 2 — subtle cream with bubblegum left accent */}
+        <blockquote className="border-l-4 border-bubblegum bg-lemon/20 rounded-r-2xl px-6 py-6 my-4">
+          <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-snug">
             {t('pull2_l1')}<br />
             {t('pull2_l2')}<br />
             {t('pull2_l3')}

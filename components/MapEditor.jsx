@@ -12,8 +12,8 @@ const MAP_THEMES = [
   { id: 'holiday_beach',  folder: 'holidaypath',   prefix: 'holiday',  days: 21 },
   { id: 'new_home',       folder: 'newhomepath',   prefix: 'newhome',  days: 21 },
   { id: 'happy_birthday', folder: 'birthdaypath',  prefix: 'birthday', days: 21 },
-  { id: 'christmas',      folder: 'christmaspath', prefix: 'christmas',days: 24 },
   { id: 'no_theme',       folder: 'nothemepath',   prefix: 'notheme',  days: 21 },
+  { id: 'christmas',      folder: 'christmaspath', prefix: 'christmas',days: 24 },
 ]
 
 const CHARACTERS = [
@@ -193,7 +193,7 @@ const MapEditor = forwardRef(function MapEditor(props, ref) {
       </div>
 
       {/* ── Live preview ─────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col items-center gap-3 lg:self-start lg:sticky lg:top-4">
+      <div className="flex-1 flex flex-col items-center gap-3 lg:self-start lg:sticky lg:top-20">
         <p className="text-sm font-semibold text-gray-700 self-start lg:self-center">
           {tE('preview')}
         </p>

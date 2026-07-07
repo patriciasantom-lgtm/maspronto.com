@@ -4,7 +4,7 @@ import { Link } from '@/i18n/navigation'
 async function getOrder(id) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/order-status?id=${id}`, { next: { revalidate: 60 } })
+    const res = await fetch(`${baseUrl}/api/printful/order-status/${id}`, { next: { revalidate: 60 } })
     if (!res.ok) return null
     return res.json()
   } catch { return null }
@@ -15,9 +15,7 @@ export default async function OrderPage({ params }) {
   const t = await getTranslations({ locale, namespace: 'tracking' })
 
   const order = await getOrder(id)
-  // TODO (Printful migration): gelatoStatus field name comes from /api/order-status.
-  // When migrating to Printful, update that API route and rename this field if needed.
-  const statusKey = order?.gelatoStatus || 'created'
+  const statusKey = order?.status || 'created'
 
   const STATUS_MAP = {
     created:    { label: t('status_created'),    color: 'blue',   icon: '📋' },

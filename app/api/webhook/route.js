@@ -1,8 +1,7 @@
 import { stripe } from '@/lib/stripe'
 import { fetchJson, savePdf } from '@/lib/storage'
 import { generateMapPdfFromConfig } from '@/lib/generateMapPdf'
-import { generateStickerPdf } from '@/lib/pdf'
-import { createGelatoOrder } from '@/lib/gelato'
+import { createPrintfulOrder } from '@/lib/printful'
 import { sendDigitalDownloadEmail, sendDigitalDownloadEmailEn, sendPhysicalOrderEmail } from '@/lib/email'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -43,7 +42,6 @@ export async function POST(request) {
 
 async function fulfillOrder(session) {
   const { product, configBlobUrl, customerName, customerEmail, locale = 'es' } = session.metadata
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   const orderId = uuidv4()
 
   // Fetch config from Blob
@@ -52,53 +50,42 @@ async function fulfillOrder(session) {
   // Generate map PDF using sharp + pdf-lib
   console.log(`Generating map PDF for order ${orderId}...`)
   const mapPdfBuffer = await generateMapPdfFromConfig(config)
-  const mapPdfUrl = await savePdf(mapPdfBuffer, `map-${orderId}.pdf`)
+  const mapFileUrl = await savePdf(mapPdfBuffer, `map-${orderId}.pdf`)
 
   const emailFn = locale === 'en' ? sendDigitalDownloadEmailEn : sendDigitalDownloadEmail
 
   if (product === 'digital') {
-    await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapPdfUrl })
+    await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl })
     console.log(`Digital order ${orderId} fulfilled — email sent to ${customerEmail}`)
     return
   }
 
   // Physical Kit: send PDF digital immediately, then create print order
-  // The kit includes the PDF digital — customer can start right away while kit ships
-  await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapPdfUrl })
+  await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl })
   console.log(`Physical kit PDF sent to ${customerEmail}`)
 
-  // Generate sticker sheet for print order
-  console.log(`Generating sticker PDF for theme: ${config.theme}...`)
-  const stickerPdfBuffer = await generateStickerPdf(config.theme, siteUrl)
-  const stickerPdfUrl = await savePdf(stickerPdfBuffer, `stickers-${orderId}.pdf`)
+  const shippingAddress = address || {
+    line1: session.shipping_details?.address?.line1 || '',
+    line2: session.shipping_details?.address?.line2 || '',
+    suburb: session.shipping_details?.address?.city || '',
+    state: session.shipping_details?.address?.state || '',
+    postcode: session.shipping_details?.address?.postal_code || '',
+  }
 
-  // TODO: Migrate to Printful when credentials are available.
-  // Replace createGelatoOrder call below with Printful API equivalent.
-  // Printful docs: https://developers.printful.com/docs/
-  // Required: orderId, customer, address, mapPdfUrl, stickerPdfUrl
-  const gelatoOrder = await createGelatoOrder({
+  const printfulOrder = await createPrintfulOrder({
     orderId,
     customer: { name: customerName, email: customerEmail },
-    address: address || {
-      line1: session.shipping_details?.address?.line1 || '',
-      line2: session.shipping_details?.address?.line2 || '',
-      suburb: session.shipping_details?.address?.city || '',
-      state: session.shipping_details?.address?.state || '',
-      postcode: session.shipping_details?.address?.postal_code || '',
-    },
-    mapPdfUrl,
-    stickerPdfUrl,
-    theme: config.theme,
+    address: shippingAddress,
+    mapFileUrl,
   })
 
-  console.log(`Print order created: ${gelatoOrder.id}`)
+  const orderData = printfulOrder.data ?? printfulOrder
+  console.log(`Printful order created: ${orderData.id} (external: ${orderId})`)
 
-  // Send physical order confirmation (tracking email)
   await sendPhysicalOrderEmail({
     to: customerEmail,
     name: customerName,
     orderId,
-    gelatoOrderId: gelatoOrder.id,
     locale,
   })
 

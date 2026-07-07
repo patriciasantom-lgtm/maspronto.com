@@ -38,9 +38,9 @@ export default function Navbar() {
   }
 
   function isActive(href) {
-    if (href === '/#pricing') return pathname === '/'
+    if (href === '/#pricing') return false
     if (href === '/') return pathname === '/'
-    return pathname.startsWith(href)
+    return pathname === href || pathname.startsWith(href + '/')
   }
 
   return (
