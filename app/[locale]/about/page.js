@@ -5,6 +5,14 @@ export async function generateMetadata() {
   return { title: 'Our story — Pronto' }
 }
 
+const Quote = ({ children }) => (
+  <blockquote className="border-l-4 border-bubblegum pl-6 py-4 my-2">
+    <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-snug">
+      {children}
+    </p>
+  </blockquote>
+)
+
 export default async function AboutPage() {
   const t = await getTranslations('about')
 
@@ -23,56 +31,33 @@ export default async function AboutPage() {
       {/* Story */}
       <div className="max-w-2xl mx-auto px-4 py-16 space-y-6">
 
-        {/* P1 – P3 */}
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body1')}
-        </p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body2')}
-        </p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body3')}
-        </p>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body1')}</p>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body2')}</p>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body3')}</p>
 
-        {/* Pull Quote 1 — border-left bubblegum */}
-        <blockquote className="border-l-4 border-bubblegum pl-6 py-2 my-4">
-          <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-snug">
-            {t('pull1')}
-          </p>
-        </blockquote>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body4')}</p>
 
-        {/* P4 – P5 */}
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body4')}
-        </p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body5')}
-        </p>
+        {/* Quote 1 */}
+        <Quote>{t('pull1')}</Quote>
 
-        {/* Pull Quote 2 — subtle cream with bubblegum left accent */}
-        <blockquote className="border-l-4 border-bubblegum bg-lemon/20 rounded-r-2xl px-6 py-6 my-4">
-          <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-snug">
-            {t('pull2_l1')}<br />
-            {t('pull2_l2')}<br />
-            {t('pull2_l3')}
-          </p>
-        </blockquote>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body5')}</p>
 
-        {/* P6 – P7 */}
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body6')}
-        </p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">
-          {t('body7')}
-        </p>
+        {/* Quote 2 */}
+        <Quote>
+          {t('pull2_l1')}<br />
+          {t('pull2_l2')}<br />
+          {t('pull2_l3')}
+        </Quote>
 
-        {/* Pull Quote 3 — centered closing statement */}
-        <blockquote className="text-center py-6">
-          <p className="font-fraunces text-2xl sm:text-3xl text-ink italic leading-snug">
-            {t('pull3_l1')}<br />
-            {t('pull3_l2')}
-          </p>
-        </blockquote>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body6')}</p>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body7')}</p>
+        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body8')}</p>
+
+        {/* Quote 3 */}
+        <Quote>
+          {t('pull3_l1')}<br />
+          {t('pull3_l2')}
+        </Quote>
 
       </div>
 
