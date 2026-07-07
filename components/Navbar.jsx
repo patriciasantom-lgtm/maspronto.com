@@ -7,6 +7,7 @@ import Logo from './Logo'
 
 const NAV_LINKS = [
   { href: '/',                 labelKey: 'home' },
+  { href: '/how-it-works',     labelKey: 'how_it_works' },
   { href: '/why-this-works',   labelKey: 'why_this_works' },
   { href: '/#pricing',         labelKey: 'pricing' },
   { href: '/about',            labelKey: 'our_story' },
