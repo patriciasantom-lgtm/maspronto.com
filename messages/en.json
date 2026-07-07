@@ -353,6 +353,24 @@
     "s8_h": "8. Contact",
     "s8_p": "hola@maspronto.com"
   },
+  "whythisworks": {
+    "eyebrow": "The science of the wait",
+    "h1": "Why this actually works",
+    "intro": "It's not just a pretty poster. There's real psychology behind why children respond so powerfully to a countdown path.",
+    "card1_title": "Young children can't feel time",
+    "card1_body": "Kids under 7 experience time differently. 'Three months' is meaningless. 'Soon' is an empty word. Without something concrete to hold onto, the wait feels infinite — and that's when the anxiety and the endless 'are we there yet?' begins.",
+    "card2_title": "A daily ritual creates calm",
+    "card2_body": "When children know what to expect — one sticker, every morning — they stop asking 'when is it?' The ritual replaces uncertainty with routine. And routine is where children feel safe.",
+    "card3_title": "They can see it moving",
+    "card3_body": "Abstract calendars don't mean much to little ones. But a path they can touch, fill in, and watch grow shorter? That's something they can understand. Progress becomes visible. The wait has a shape.",
+    "card4_title": "They become part of the story",
+    "card4_body": "Children who feel like participants — not just passengers — handle change and anticipation far better. Adding that sticker every day gives them agency. They're not just waiting. They're doing something about it.",
+    "closing_p1": "That's the idea behind",
+    "closing_brand": "más pronto",
+    "closing_p2": ". Turning the wait into something your child can hold, touch, and celebrate — one step at a time.",
+    "cta_h2": "Ready to make the wait magical?",
+    "cta_btn": "Create my path, free"
+  },
   "returns": {
     "title": "Returns Policy",
     "updated": "Last updated: June 2026",

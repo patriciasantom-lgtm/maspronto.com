@@ -45,7 +45,7 @@ export default async function HomePage() {
               <Link href="/create" className="btn btn-buy px-8 py-4 text-base">
                 {tH('cta_primary')}
               </Link>
-              <Link href="/how-it-works" className="btn border-2 border-mint/40 text-mint hover:border-mint hover:text-lemon px-8 py-4 text-base">
+              <Link href="/why-this-works" className="btn border-2 border-mint/40 text-mint hover:border-mint hover:text-lemon px-8 py-4 text-base">
                 {tH('cta_secondary')}
               </Link>
             </div>

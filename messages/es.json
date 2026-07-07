@@ -353,6 +353,24 @@
     "s8_h": "8. Contacto",
     "s8_p": "hola@maspronto.com"
   },
+  "whythisworks": {
+    "eyebrow": "La psicología de la espera",
+    "h1": "Por qué realmente funciona",
+    "intro": "No es solo un lindo póster. Hay psicología real detrás de por qué los niños responden tan poderosamente a un camino de cuenta regresiva.",
+    "card1_title": "Los niños pequeños no sienten el tiempo",
+    "card1_body": "Los niños menores de 7 años experimentan el tiempo de forma diferente. 'Tres meses' no significa nada. 'Pronto' es una palabra vacía. Sin algo concreto a qué aferrarse, la espera se siente infinita — y ahí es cuando empieza la ansiedad y el interminable '¿cuándo llegamos?'.",
+    "card2_title": "Un ritual diario crea calma",
+    "card2_body": "Cuando los niños saben qué esperar — una calcomanía, cada mañana — dejan de preguntar '¿cuándo es?'. El ritual reemplaza la incertidumbre con rutina. Y la rutina es donde los niños se sienten seguros.",
+    "card3_title": "Pueden verlo avanzar",
+    "card3_body": "Los calendarios abstractos no dicen mucho a los más pequeños. Pero ¿un camino que pueden tocar, completar y ver hacerse más corto? Eso sí lo entienden. El progreso se vuelve visible. La espera tiene una forma.",
+    "card4_title": "Se convierten en parte de la historia",
+    "card4_body": "Los niños que se sienten participantes — no solo pasajeros — manejan mucho mejor los cambios y la anticipación. Pegar esa calcomanía cada día les da protagonismo. No solo están esperando. Están haciendo algo al respecto.",
+    "closing_p1": "Esa es la idea detrás de",
+    "closing_brand": "más pronto",
+    "closing_p2": ". Convertir la espera en algo que tu hijo puede sostener, tocar y celebrar — un paso a la vez.",
+    "cta_h2": "¿Lista para hacer mágica la espera?",
+    "cta_btn": "Crear mi camino, gratis"
+  },
   "returns": {
     "title": "Política de devoluciones",
     "updated": "Última actualización: junio de 2026",
