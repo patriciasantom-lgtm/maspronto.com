@@ -6,10 +6,10 @@ import { Link, usePathname, useRouter } from '@/i18n/navigation'
 import Logo from './Logo'
 
 const NAV_LINKS = [
-  { href: '/',            labelKey: 'home' },
-  { href: '/how-it-works', labelKey: 'how_it_works' },
-  { href: '/#pricing',    labelKey: 'pricing' },
-  { href: '/about',       labelKey: 'our_story' },
+  { href: '/',                 labelKey: 'home' },
+  { href: '/why-this-works',   labelKey: 'why_this_works' },
+  { href: '/#pricing',         labelKey: 'pricing' },
+  { href: '/about',            labelKey: 'our_story' },
 ]
 
 export default function Navbar() {
