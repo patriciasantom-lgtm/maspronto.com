@@ -6,15 +6,14 @@ import ThemeCarousel from '@/components/ThemeCarousel'
 import LocalPriceTag from '@/components/LocalPriceTag'
 
 const MAP_ICONS = [
-  // TODO: add colour version for Space when ready
-  { id: 'space',          bw: '/images/iconos/icon_space.png',          colour: null },
-  { id: 'new_baby',       bw: '/images/iconos/icon_newbaby.png',        colour: '/images/iconos/colour/icon_newbaby_colour.png' },
-  { id: 'school',         bw: '/images/iconos/icon-school.png',         colour: '/images/iconos/colour/icon_school_colour.png' },
-  { id: 'holiday_beach',  bw: '/images/iconos/icon_beach.png',          colour: '/images/iconos/colour/icon_beach_colour.png' },
-  { id: 'new_home',       bw: '/images/iconos/icon_newhome.png',        colour: '/images/iconos/colour/icon_newhome_colour.png' },
-  { id: 'happy_birthday', bw: '/images/iconos/icon_happybirthday.png',  colour: '/images/iconos/colour/icon_birthday_colour.png' },
-  { id: 'christmas',      bw: '/images/iconos/icon_christmas.png',      colour: '/images/iconos/colour/icon_christmas_colour.png' },
-  { id: 'no_theme',       bw: '/images/iconos/icon_notheme.png',        colour: '/images/iconos/colour/icon_nothem_colour.png' },
+  { id: 'space',          bw: '/images/iconos/bw/icon_space.png',     colour: '/images/iconos/colour/iconcolour_space.png' },
+  { id: 'new_baby',       bw: '/images/iconos/bw/icon_newbaby.png',   colour: '/images/iconos/colour/iconcolour_newbaby.png' },
+  { id: 'school',         bw: '/images/iconos/bw/icon_school.png',    colour: '/images/iconos/colour/iconcolour_school.png' },
+  { id: 'holiday_beach',  bw: '/images/iconos/bw/icon_holiday.png',   colour: '/images/iconos/colour/iconcolour_holiday.png' },
+  { id: 'new_home',       bw: '/images/iconos/bw/icon_newhome.png',   colour: '/images/iconos/colour/iconcolour_newhome.png' },
+  { id: 'happy_birthday', bw: '/images/iconos/bw/icon_birthday.png',  colour: '/images/iconos/colour/iconcolour_birthday.png' },
+  { id: 'christmas',      bw: '/images/iconos/bw/icon_christmas.png', colour: '/images/iconos/colour/iconcolour_christmas.png' },
+  { id: 'no_theme',       bw: '/images/iconos/bw/icon_notheme.png',   colour: '/images/iconos/colour/iconcolour_notheme.png' },
 ]
 
 export default async function HomePage() {
@@ -95,9 +94,7 @@ export default async function HomePage() {
               >
                 <div className="theme-icon-wrap">
                   <img src={bw} alt={tMT(id)} className="theme-icon-bw" />
-                  {colour && (
-                    <img src={colour} alt="" aria-hidden="true" className="theme-icon-colour" />
-                  )}
+                  <img src={colour} alt="" aria-hidden="true" className="theme-icon-colour" />
                 </div>
                 <span className="font-dm-sans text-xs text-ink/70 group-hover:text-ink leading-tight">
                   {tMT(id)}

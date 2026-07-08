@@ -139,4 +139,8 @@ input[type='range']::-moz-range-thumb {
 .theme-icon-colour { opacity: 0; mix-blend-mode: multiply; }
 .theme-card:hover .theme-icon-bw    { opacity: 0; }
 .theme-card:hover .theme-icon-colour { opacity: 1; }
+@media (hover: none) {
+  .theme-icon-bw     { opacity: 0; }
+  .theme-icon-colour { opacity: 1; }
+}
 
