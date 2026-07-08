@@ -89,7 +89,7 @@ export default async function HomePage() {
             {MAP_ICONS.map(({ id, bw, colour }) => (
               <Link
                 key={id}
-                href="/create"
+                href={`/create?theme=${id}`}
                 className="theme-card flex flex-col items-center gap-3 py-6 px-3 rounded-2xl border border-ink/10 bg-pebble text-center group"
               >
                 <div className="theme-icon-wrap">

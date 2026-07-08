@@ -9,15 +9,15 @@ import StepIndicator from '@/components/StepIndicator'
 
 const STATES_AU = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA']
 
-const MAP_THUMBS = {
-  space:          '/images/maps/thumbnails/space.png',
-  new_baby:       '/images/maps/thumbnails/new_baby.png',
-  school:         '/images/maps/thumbnails/school.png',
-  holiday_beach:  '/images/maps/thumbnails/holiday_beach.png',
-  new_home:       '/images/maps/thumbnails/new_home.png',
-  happy_birthday: '/images/maps/thumbnails/happy_birthday.png',
-  christmas:      '/images/maps/thumbnails/christmas.png',
-  no_theme:       '/images/maps/thumbnails/no_theme.png',
+const STICKER_FILES = {
+  space:          'sticker_space',
+  new_baby:       'sticker_newbaby',
+  school:         'sticker_school',
+  holiday_beach:  'sticker_holiday',
+  new_home:       'sticker_newhome',
+  happy_birthday: 'sticker_birthday',
+  christmas:      'sticker_christmas',
+  no_theme:       'sticker_notheme',
 }
 
 const Input = ({ label, value, onChange, ...props }) => (
@@ -39,6 +39,7 @@ export default function DetailsPage() {
   const router = useRouter()
   const [product, setProduct] = useState(null)
   const [config, setConfig] = useState(null)
+  const [canvasUrl, setCanvasUrl] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const local = useLocalPrice()
@@ -55,6 +56,8 @@ export default function DetailsPage() {
     setProduct(p)
     const c = localStorage.getItem('prontoConfig')
     if (c) setConfig(JSON.parse(c))
+    const canvas = localStorage.getItem('prontoCanvasUrl')
+    if (canvas) setCanvasUrl(canvas)
   }, [router])
 
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }))
@@ -106,16 +109,29 @@ export default function DetailsPage() {
         {/* Your map summary card */}
         {config && (
           <div className="bg-white rounded-2xl shadow-sm border border-ink/10 p-4 mb-6 flex items-center gap-4">
-            {MAP_THUMBS[config.theme] && (
-              <div className="relative w-16 h-[86px] shrink-0 rounded-xl overflow-hidden">
-                <Image src={MAP_THUMBS[config.theme]} alt="" fill className="object-cover" sizes="64px" />
-              </div>
-            )}
+            {/* Path preview — real canvas if available, otherwise static thumbnail */}
+            <div className="relative w-16 h-[86px] shrink-0 rounded-xl overflow-hidden bg-pebble">
+              {canvasUrl ? (
+                <img src={canvasUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <Image src={`/images/maps/thumbnails/${config.theme}.png`} alt="" fill className="object-cover" sizes="64px" />
+              )}
+            </div>
+
+            {/* Character */}
             {config.character && (
               <div className="relative w-10 h-14 shrink-0">
                 <Image src={`/images/characters/png/${config.character}.png`} alt="" fill className="object-contain" sizes="40px" />
               </div>
             )}
+
+            {/* Sticker sheet preview — physical kit only */}
+            {product === 'kit' && STICKER_FILES[config.theme] && (
+              <div className="relative w-10 h-14 shrink-0">
+                <Image src={`/images/stickers/${STICKER_FILES[config.theme]}.png`} alt="" fill className="object-contain" sizes="40px" />
+              </div>
+            )}
+
             <div className="min-w-0 flex-1">
               <p className="font-dm-sans-bold text-sm text-ink truncate">{config.title}</p>
               {config.subtitle && (

@@ -3,13 +3,19 @@
 import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
+import { useSearchParams } from 'next/navigation'
 import MapEditor from '@/components/MapEditor'
 import StepIndicator from '@/components/StepIndicator'
+
+const VALID_THEMES = ['space','new_baby','school','holiday_beach','new_home','happy_birthday','christmas','no_theme']
 
 export default function CreatePage() {
   const t = useTranslations('editor')
   const editorRef = useRef(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const themeParam = searchParams.get('theme')
+  const initialTheme = VALID_THEMES.includes(themeParam) ? themeParam : null
 
   function handleContinue() {
     const config = editorRef.current?.getConfig()
@@ -28,7 +34,7 @@ export default function CreatePage() {
         </h1>
       </div>
 
-      <MapEditor ref={editorRef} />
+      <MapEditor ref={editorRef} initialTheme={initialTheme} />
 
       <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-ink/10 p-4 z-40">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">

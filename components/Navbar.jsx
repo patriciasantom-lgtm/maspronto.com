@@ -19,6 +19,14 @@ export default function Navbar() {
   const router = useRouter()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [hash, setHash] = useState('')
+
+  useEffect(() => {
+    const update = () => setHash(window.location.hash)
+    update()
+    window.addEventListener('hashchange', update)
+    return () => window.removeEventListener('hashchange', update)
+  }, [])
 
   useEffect(() => {
     const stored = localStorage.getItem('pronto-locale')
@@ -39,8 +47,8 @@ export default function Navbar() {
   }
 
   function isActive(href) {
-    if (href === '/#pricing') return false
-    if (href === '/') return pathname === '/'
+    if (href === '/#pricing') return pathname === '/' && hash === '#pricing'
+    if (href === '/') return pathname === '/' && hash !== '#pricing'
     return pathname === href || pathname.startsWith(href + '/')
   }
 

@@ -25,14 +25,14 @@ const CHARACTERS = [
   { id: 'boy3',  file: '/images/characters/png/boy3.png',  alt: 'Boy 3' },
 ]
 
-const MapEditor = forwardRef(function MapEditor(props, ref) {
+const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const tE  = useTranslations('editor')
   const tMT = useTranslations('mapThemes')
 
   const [config, setConfig] = useState({
     title:     tE('title_default'),
     subtitle:  tE('subtitle_default'),
-    theme:     'space',
+    theme:     initialTheme || 'space',
     character: 'girl1',
     font:      'Bubblegum Sans',
   })
