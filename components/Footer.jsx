@@ -23,11 +23,12 @@ export default async function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {[
-                { href: '/',             key: 'link_home' },
-                { href: '/how-it-works', key: 'link_how' },
-                { href: '/#pricing',     key: 'link_pricing' },
-                { href: '/about',        key: 'link_about' },
-                { href: '/create',       key: 'link_create' },
+                { href: '/',                key: 'link_home' },
+                { href: '/how-it-works',    key: 'link_how' },
+                { href: '/why-this-works',  key: 'link_why' },
+                { href: '/#pricing',        key: 'link_pricing' },
+                { href: '/about',           key: 'link_about' },
+                { href: '/create',          key: 'link_create' },
               ].map(({ href, key }) => (
                 <li key={key}>
                   <Link
