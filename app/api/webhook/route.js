@@ -77,6 +77,7 @@ async function fulfillOrder(session) {
     customer: { name: customerName, email: customerEmail },
     address: shippingAddress,
     mapFileUrl,
+    theme: config.theme,
   })
 
   const orderData = printfulOrder.data ?? printfulOrder

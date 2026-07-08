@@ -2,13 +2,13 @@ import { createPrintfulOrder } from '@/lib/printful'
 
 export async function POST(request) {
   try {
-    const { orderId, customer, address, mapFileUrl } = await request.json()
+    const { orderId, customer, address, mapFileUrl, theme } = await request.json()
 
     if (!orderId || !customer?.name || !customer?.email || !address || !mapFileUrl) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    const response = await createPrintfulOrder({ orderId, customer, address, mapFileUrl })
+    const response = await createPrintfulOrder({ orderId, customer, address, mapFileUrl, theme })
     const order = response.data ?? response
 
     return Response.json({
