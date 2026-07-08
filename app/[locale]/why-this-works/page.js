@@ -7,22 +7,22 @@ export async function generateMetadata() {
 
 const CARDS = [
   {
-    icon: '⏳',
+    icon: '/images/iconos/colour/iconcolour_time.png',
     titleKey: 'card1_title',
     bodyKey: 'card1_body',
   },
   {
-    icon: '⭐',
+    icon: '/images/iconos/colour/iconcolour_daily.png',
     titleKey: 'card2_title',
     bodyKey: 'card2_body',
   },
   {
-    icon: '👀',
+    icon: '/images/iconos/colour/iconcolour_eyes.png',
     titleKey: 'card3_title',
     bodyKey: 'card3_body',
   },
   {
-    icon: '🙌',
+    icon: '/images/iconos/colour/iconcolour_calm.png',
     titleKey: 'card4_title',
     bodyKey: 'card4_body',
   },
@@ -58,7 +58,7 @@ export default async function WhyThisWorksPage() {
               key={titleKey}
               className="bg-white border border-ink/10 rounded-2xl p-8"
             >
-              <div className="text-4xl mb-5">{icon}</div>
+              <img src={icon} alt="" aria-hidden="true" className="w-16 h-16 object-contain mb-5" />
               <h2 className="font-fraunces text-2xl text-ink mb-3">
                 {t(titleKey)}
               </h2>
