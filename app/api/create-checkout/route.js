@@ -18,7 +18,7 @@ export async function POST(request) {
       return Response.json({ error: 'Dirección de envío incompleta' }, { status: 400 })
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    const siteUrl = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://maspronto.com'
 
     // Store map config + customer data in Vercel Blob
     const { url: configBlobUrl } = await saveJson(
