@@ -18,6 +18,7 @@ export async function POST(request) {
       return Response.json({ error: 'Dirección de envío incompleta' }, { status: 400 })
     }
 
+    console.log('[DEBUG] Stripe key prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 12))
     const siteUrl = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://maspronto.com'
 
     // Store map config + customer data in Vercel Blob
