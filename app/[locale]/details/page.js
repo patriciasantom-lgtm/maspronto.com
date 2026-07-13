@@ -43,8 +43,8 @@ export default function DetailsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const local = useLocalPrice()
-  const audCentsDigital = parseInt(process.env.NEXT_PUBLIC_PRICE_DIGITAL || '990')
-  const audCentsKit     = parseInt(process.env.NEXT_PUBLIC_PRICE_KIT     || '4990')
+  const audCentsDigital = 990   // A$9.90
+  const audCentsKit     = 4990  // A$49.90
 
   const [form, setForm] = useState({
     name: '', email: '', line1: '', line2: '', suburb: '', state: '', postcode: '',
