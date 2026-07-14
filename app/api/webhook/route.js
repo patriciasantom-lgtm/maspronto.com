@@ -1,6 +1,6 @@
 import { stripe } from '@/lib/stripe'
-import { fetchJson, savePdf } from '@/lib/storage'
-import { generateMapPdfFromConfig } from '@/lib/generateMapPdf'
+import { fetchJson, savePdf, savePng } from '@/lib/storage'
+import { generateMapPdfFromConfig, generateMapPngFromConfig } from '@/lib/generateMapPdf'
 import { createPrintfulOrder } from '@/lib/printful'
 import { sendDigitalDownloadEmail, sendDigitalDownloadEmailEn, sendPhysicalOrderEmail } from '@/lib/email'
 import { v4 as uuidv4 } from 'uuid'
@@ -72,11 +72,14 @@ async function fulfillOrder(session) {
     postcode: session.shipping_details?.address?.postal_code || '',
   }
 
+  const printPngBuffer = await generateMapPngFromConfig(config)
+  const printFileUrl = await savePng(printPngBuffer, `map-${orderId}.png`)
+
   const printfulOrder = await createPrintfulOrder({
     orderId,
     customer: { name: customerName, email: customerEmail },
     address: shippingAddress,
-    mapFileUrl,
+    mapFileUrl: printFileUrl,
     theme: config.theme,
   })
 
