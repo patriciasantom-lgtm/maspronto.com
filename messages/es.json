@@ -373,6 +373,12 @@
     "cta_h2": "¿Lista para hacer mágica la espera?",
     "cta_btn": "Crear mi camino, gratis"
   },
+  "shipping": {
+    "eyebrow": "Envíos internacionales",
+    "title": "Llevamos la magia hasta tu puerta",
+    "countries": "Estados Unidos · Canadá · Reino Unido · Unión Europea (27 países) · Australia",
+    "note": "Los pedidos de Australia se envían de forma manual. El resto de países recibe el kit via Printful."
+  },
   "returns": {
     "title": "Política de devoluciones",
     "updated": "Última actualización: junio de 2026",

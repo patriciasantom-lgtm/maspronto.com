@@ -80,7 +80,15 @@ export async function POST(request) {
       // Collect shipping address via Stripe for physical orders
       ...(
         !isDigital && {
-          shipping_address_collection: { allowed_countries: ['AU'] },
+          shipping_address_collection: {
+            allowed_countries: [
+              'US', 'CA', 'GB', 'AU',
+              // European Union (27)
+              'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
+              'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+              'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
+            ],
+          },
         }
       ),
     })

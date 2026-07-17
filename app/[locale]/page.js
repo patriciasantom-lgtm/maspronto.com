@@ -4,6 +4,7 @@ import Image from 'next/image'
 import MapCarousel from '@/components/MapCarousel'
 import ThemeCarousel from '@/components/ThemeCarousel'
 import LocalPriceTag from '@/components/LocalPriceTag'
+import ShippingCountries from '@/components/ShippingCountries'
 
 const MAP_ICONS = [
   { id: 'space',          bw: '/images/iconos/bw/icon_space.png',     colour: '/images/iconos/colour/iconcolour_space.png' },
@@ -282,7 +283,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 8. Final CTA ────────────────────────────────────────── */}
+      {/* ── 8. Shipping Countries ────────────────────────────────── */}
+      <ShippingCountries />
+
+      {/* ── 9. Final CTA ────────────────────────────────────────── */}
       <section className="bg-lemon py-24 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="font-fraunces text-4xl sm:text-6xl text-ink mb-4">

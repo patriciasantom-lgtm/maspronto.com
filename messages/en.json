@@ -373,6 +373,12 @@
     "cta_h2": "Ready to make the wait magical?",
     "cta_btn": "Create my path, free"
   },
+  "shipping": {
+    "eyebrow": "Worldwide shipping",
+    "title": "We ship to your door",
+    "countries": "United States · Canada · United Kingdom · European Union (27 countries) · Australia",
+    "note": "Australia orders include manual fulfilment. All other countries ship via Printful's local print partners."
+  },
   "returns": {
     "title": "Returns Policy",
     "updated": "Last updated: June 2026",
