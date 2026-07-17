@@ -37,7 +37,6 @@ export default function CheckoutPage() {
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           <Badge color="mint">{t('trust_stripe')}</Badge>
           <Badge color="lemon">{t('trust_au')}</Badge>
-          <Badge color="mint">{t('trust_afterpay')}</Badge>
           <Badge color="mint">{t('trust_guarantee')}</Badge>
         </div>
       </div>
@@ -48,8 +47,8 @@ export default function CheckoutPage() {
           <p className="font-dm-sans text-sm text-ink/60">
             {selected
               ? selected === 'digital'
-                ? `${tp('digital_name')} — ${tp('digital_price')} ${tp('digital_currency')}`
-                : `${tp('kit_name')} — ${tp('kit_price')} ${tp('kit_currency')}`
+                ? `${tp('digital_name')} · ${tp('digital_price')} ${tp('digital_currency')}`
+                : `${tp('kit_name')} · ${tp('kit_price')} ${tp('kit_currency')}`
               : t('select_to_continue')}
           </p>
           <button

@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({ params: { locale } }) {
   const t = await getTranslations({ locale, namespace: 'privacy' })
-  return { title: `${t('title')} — Más pronto` }
+  return { title: `${t('title')} | Más pronto` }
 }
 
 export default async function PrivacyPage() {

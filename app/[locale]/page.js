@@ -155,7 +155,7 @@ export default async function HomePage() {
               {t('kit_body')}
             </p>
             <ul className="space-y-3 mb-8 text-left max-w-xs mx-auto lg:mx-0">
-              {['kit_f1','kit_f2','kit_f3','kit_f4'].map(k => (
+              {['kit_f1','kit_f2','kit_f3'].map(k => (
                 <li key={k} className="flex items-center gap-3 font-dm-sans text-sm text-mint">
                   <span className="w-5 h-5 rounded-full bg-lemon flex items-center justify-center shrink-0">
                     <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -173,9 +173,6 @@ export default async function HomePage() {
 
           {/* Visual: character grid */}
           <div className="shrink-0 flex flex-col items-center gap-2">
-            <div className="inline-flex items-center gap-2 bg-lemon text-ink font-dm-sans-bold text-xs px-3 py-1.5 rounded-full mb-4">
-              {t('kit_badge')}
-            </div>
             <CharacterGrid />
           </div>
         </div>
@@ -277,7 +274,6 @@ export default async function HomePage() {
               <Link href="/create" className="btn btn-buy py-3 text-sm w-full">
                 {t('pricing_kit_cta')}
               </Link>
-              <p className="font-dm-sans text-xs text-ink/40 text-center mt-3">{t('pricing_afterpay')}</p>
             </div>
           </div>
         </div>

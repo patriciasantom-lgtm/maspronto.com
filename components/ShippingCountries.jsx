@@ -15,7 +15,7 @@ export default async function ShippingCountries() {
           {t('title')}
         </h2>
 
-        <p className="font-dm-sans text-lg text-ink/70 leading-loose mb-6">
+        <p className="font-dm-sans text-lg text-ink/70 leading-loose">
           {countries.map((country, i) => (
             <span key={i}>
               <span className="font-dm-sans-bold text-ink">{country}</span>
@@ -24,9 +24,6 @@ export default async function ShippingCountries() {
           ))}
         </p>
 
-        <p className="font-dm-sans text-sm text-ink/40 leading-relaxed">
-          {t('note')}
-        </p>
       </div>
     </section>
   )

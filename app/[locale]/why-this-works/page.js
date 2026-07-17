@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
 export async function generateMetadata() {
-  return { title: 'Why this works — Pronto' }
+  return { title: 'Why this works | Pronto' }
 }
 
 const CARDS = [

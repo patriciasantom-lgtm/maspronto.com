@@ -20,12 +20,27 @@ export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
   const [hash, setHash] = useState('')
+  const [pricingVisible, setPricingVisible] = useState(false)
 
   useEffect(() => {
     const update = () => setHash(window.location.hash)
     update()
     window.addEventListener('hashchange', update)
-    return () => window.removeEventListener('hashchange', update)
+
+    const pricingEl = document.getElementById('pricing')
+    let observer
+    if (pricingEl) {
+      observer = new IntersectionObserver(
+        ([entry]) => setPricingVisible(entry.isIntersecting),
+        { threshold: 0.2 }
+      )
+      observer.observe(pricingEl)
+    }
+
+    return () => {
+      window.removeEventListener('hashchange', update)
+      observer?.disconnect()
+    }
   }, [])
 
   useEffect(() => {
@@ -47,8 +62,8 @@ export default function Navbar() {
   }
 
   function isActive(href) {
-    if (href === '/#pricing') return pathname === '/' && hash === '#pricing'
-    if (href === '/') return pathname === '/' && hash !== '#pricing'
+    if (href === '/#pricing') return pathname === '/' && (hash === '#pricing' || pricingVisible)
+    if (href === '/') return pathname === '/' && hash !== '#pricing' && !pricingVisible
     return pathname === href || pathname.startsWith(href + '/')
   }
 

@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
 export async function generateMetadata() {
-  return { title: 'Our story — Pronto' }
+  return { title: 'Our story | Pronto' }
 }
 
 const Quote = ({ children }) => (

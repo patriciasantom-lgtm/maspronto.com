@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation'
 import FaqAccordion from '@/components/FaqAccordion'
 
 export async function generateMetadata() {
-  return { title: 'How it works — Pronto' }
+  return { title: 'How it works | Pronto' }
 }
 
 export default async function HowItWorksPage() {
