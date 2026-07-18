@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
+import { REGIONS, DEFAULT_REGION, fmt } from '@/lib/pricing'
 import StepIndicator from '@/components/StepIndicator'
 import ProductCard from '@/components/ProductCard'
 
@@ -10,13 +11,26 @@ export default function CheckoutPage() {
   const t = useTranslations('checkout')
   const tp = useTranslations('products')
   const [selected, setSelected] = useState(null)
+  const [region, setRegion] = useState(DEFAULT_REGION)
   const router = useRouter()
+
+  useEffect(() => {
+    const stored = localStorage.getItem('prontoRegion')
+    if (stored && REGIONS[stored]) setRegion(stored)
+  }, [])
 
   function handleContinue() {
     if (!selected) return
     localStorage.setItem('prontoProduct', selected)
     router.push('/details')
   }
+
+  const r = REGIONS[region]
+  const stickyPrice = selected
+    ? selected === 'digital'
+      ? `${fmt(r.digitalPrice, r.symbol)} ${r.currency.toUpperCase()}`
+      : `${fmt(r.kitTotalPrice, r.symbol)} ${r.currency.toUpperCase()}`
+    : null
 
   return (
     <div className="min-h-screen pb-24">
@@ -47,8 +61,8 @@ export default function CheckoutPage() {
           <p className="font-dm-sans text-sm text-ink/60">
             {selected
               ? selected === 'digital'
-                ? `${tp('digital_name')} · ${tp('digital_price')} ${tp('digital_currency')}`
-                : `${tp('kit_name')} · ${tp('kit_price')} ${tp('kit_currency')}`
+                ? `${tp('digital_name')} · ${stickyPrice}`
+                : `${tp('kit_name')} · ${stickyPrice}`
               : t('select_to_continue')}
           </p>
           <button

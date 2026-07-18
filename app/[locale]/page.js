@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import MapCarousel from '@/components/MapCarousel'
 import ThemeCarousel from '@/components/ThemeCarousel'
-import LocalPriceTag from '@/components/LocalPriceTag'
+import PricingSection from '@/components/PricingSection'
 import ShippingCountries from '@/components/ShippingCountries'
 
 const MAP_ICONS = [
@@ -217,67 +217,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 7. Pricing ──────────────────────────────────────────── */}
-      <section id="pricing" className="bg-white py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-3">
-              {t('pricing_eyebrow')}
-            </p>
-            <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-3">{t('pricing_h2')}</h2>
-            <p className="font-dm-sans text-ink/60">{t('pricing_subtitle')}</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {/* Digital */}
-            <div className="rounded-2xl border border-ink/10 p-8 flex flex-col">
-              <span className="inline-block font-dm-sans-bold text-xs text-ink/50 bg-ink/5 px-3 py-1 rounded-full mb-6 self-start">
-                {t('pricing_digital_badge')}
-              </span>
-              <p className="font-fraunces text-4xl text-ink mb-1">
-                {t('pricing_digital_price')}
-                <span className="font-dm-sans text-base text-ink/40 ml-1">{t('pricing_digital_currency')}</span>
-              </p>
-              <LocalPriceTag audCents={parseInt(process.env.NEXT_PUBLIC_PRICE_DIGITAL || '990')} />
-              <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_digital_title')}</h3>
-              <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_digital_desc')}</p>
-              <ul className="space-y-2.5 mb-8 flex-1">
-                {['pricing_digital_f1','pricing_digital_f2','pricing_digital_f3'].map(k => (
-                  <li key={k} className="flex items-center gap-2 font-dm-sans text-sm text-ink/80">
-                    <span className="text-mint text-base">✓</span> {t(k)}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/create" className="btn btn-secondary py-3 text-sm w-full">
-                {t('pricing_digital_cta')}
-              </Link>
-            </div>
-
-            {/* Kit */}
-            <div className="rounded-2xl border-2 border-bubblegum bg-bubblegum/5 p-8 flex flex-col relative">
-              <span className="inline-block font-dm-sans-bold text-xs text-white bg-bubblegum px-3 py-1 rounded-full mb-6 self-start">
-                {t('pricing_kit_badge')}
-              </span>
-              <p className="font-fraunces text-4xl text-ink mb-1">
-                {t('pricing_kit_price')}
-                <span className="font-dm-sans text-base text-ink/40 ml-1">{t('pricing_kit_currency')}</span>
-              </p>
-              <LocalPriceTag audCents={parseInt(process.env.NEXT_PUBLIC_PRICE_KIT || '4990')} />
-              <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_kit_title')}</h3>
-              <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_kit_desc')}</p>
-              <ul className="space-y-2.5 mb-8 flex-1">
-                {['pricing_kit_f1','pricing_kit_f2','pricing_kit_f3'].map(k => (
-                  <li key={k} className="flex items-center gap-2 font-dm-sans text-sm text-ink/80">
-                    <span className="text-bubblegum text-base">✓</span> {t(k)}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/create" className="btn btn-buy py-3 text-sm w-full">
-                {t('pricing_kit_cta')}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PricingSection />
 
       {/* ── 8. Shipping Countries ────────────────────────────────── */}
       <ShippingCountries />

@@ -77,6 +77,10 @@
     "pricing_kit_f3": "PDF digital included",
     "pricing_kit_f4": "Delivered in 4-7 days",
     "pricing_kit_cta": "Create & order kit",
+    "pricing_region_label": "Ships to",
+    "pricing_product": "Product",
+    "pricing_shipping": "Shipping",
+    "pricing_total": "Total",
     "cta_h2": "Your child's next big wait starts today.",
     "cta_subtitle": "3 minutes to make. Weeks of magic.",
     "cta_btn": "Create my path, it's free"
@@ -229,7 +233,8 @@
     "select_to_continue": "Select an option to continue",
     "trust_stripe": "Secure payment with Stripe",
     "trust_au": "Ships worldwide",
-    "trust_guarantee": "Satisfaction guaranteed"
+    "trust_guarantee": "Satisfaction guaranteed",
+    "address_collected_stripe": "Shipping address will be collected at payment"
   },
   "success": {
     "title": "Payment successful!",

@@ -77,6 +77,10 @@
     "pricing_kit_f3": "PDF digital incluido",
     "pricing_kit_f4": "Entrega en 4-7 días",
     "pricing_kit_cta": "Crear y pedir el kit",
+    "pricing_region_label": "Envíos a",
+    "pricing_product": "Producto",
+    "pricing_shipping": "Envío",
+    "pricing_total": "Total",
     "cta_h2": "La próxima gran espera de tu hijo empieza hoy.",
     "cta_subtitle": "3 minutos para crearlo. Semanas de magia.",
     "cta_btn": "Crear mi camino, es gratis"
@@ -229,7 +233,8 @@
     "select_to_continue": "Selecciona una opción para continuar",
     "trust_stripe": "Pago seguro con Stripe",
     "trust_au": "Envíos internacionales",
-    "trust_guarantee": "Satisfacción garantizada"
+    "trust_guarantee": "Satisfacción garantizada",
+    "address_collected_stripe": "La dirección de envío se recolecta al momento del pago"
   },
   "success": {
     "title": "¡Pago exitoso!",

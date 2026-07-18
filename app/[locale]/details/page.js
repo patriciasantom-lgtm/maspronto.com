@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { useLocalPrice, formatLocal } from '@/lib/useLocalPrice'
 import { useRouter } from '@/i18n/navigation'
+import { REGIONS, DEFAULT_REGION, fmt } from '@/lib/pricing'
 import Image from 'next/image'
 import StepIndicator from '@/components/StepIndicator'
 
@@ -38,13 +38,11 @@ export default function DetailsPage() {
   const locale = useLocale()
   const router = useRouter()
   const [product, setProduct] = useState(null)
+  const [region, setRegion] = useState(DEFAULT_REGION)
   const [config, setConfig] = useState(null)
   const [canvasUrl, setCanvasUrl] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const local = useLocalPrice()
-  const audCentsDigital = 990   // A$9.90
-  const audCentsKit     = 4990  // A$49.90
 
   const [form, setForm] = useState({
     name: '', email: '', line1: '', line2: '', suburb: '', state: '', postcode: '',
@@ -58,16 +56,21 @@ export default function DetailsPage() {
     if (c) setConfig(JSON.parse(c))
     const canvas = localStorage.getItem('prontoCanvasUrl')
     if (canvas) setCanvasUrl(canvas)
+    const storedRegion = localStorage.getItem('prontoRegion')
+    if (storedRegion && REGIONS[storedRegion]) setRegion(storedRegion)
   }, [router])
 
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }))
   const isPhysical = product === 'kit'
+  const isAuKit = isPhysical && region === 'AU'
 
   const isValid = () => {
     if (!form.name.trim() || !form.email.includes('@')) return false
-    if (isPhysical) return form.line1.trim() && form.suburb.trim() && form.state && form.postcode.trim()
+    if (isAuKit) return form.line1.trim() && form.suburb.trim() && form.state && form.postcode.trim()
     return true
   }
+
+  const r = REGIONS[region]
 
   async function handlePay() {
     if (!isValid() || loading) return
@@ -82,8 +85,9 @@ export default function DetailsPage() {
         config: storedConfig,
         canvasDataUrl,
         locale,
+        region,
         customer: { name: form.name, email: form.email },
-        ...(isPhysical && { address: { line1: form.line1, line2: form.line2, suburb: form.suburb, state: form.state, postcode: form.postcode } }),
+        ...(isAuKit && { address: { line1: form.line1, line2: form.line2, suburb: form.suburb, state: form.state, postcode: form.postcode } }),
       }
 
       const res = await fetch('/api/create-checkout', {
@@ -100,6 +104,10 @@ export default function DetailsPage() {
     }
   }
 
+  const productPrice = product === 'digital'
+    ? `${fmt(r.digitalPrice, r.symbol)} ${r.currency.toUpperCase()}`
+    : `${fmt(r.kitTotalPrice, r.symbol)} ${r.currency.toUpperCase()}`
+
   return (
     <div className="min-h-screen pb-24">
       <StepIndicator current={3} />
@@ -109,7 +117,6 @@ export default function DetailsPage() {
         {/* Your map summary card */}
         {config && (
           <div className="bg-white rounded-2xl shadow-sm border border-ink/10 p-4 mb-6 flex items-center gap-4">
-            {/* Path preview — real canvas if available, otherwise static thumbnail */}
             <div className="relative w-16 h-[86px] shrink-0 rounded-xl overflow-hidden bg-pebble">
               {canvasUrl ? (
                 <img src={canvasUrl} alt="" className="w-full h-full object-cover" />
@@ -118,14 +125,12 @@ export default function DetailsPage() {
               )}
             </div>
 
-            {/* Character */}
             {config.character && (
               <div className="relative w-10 h-14 shrink-0">
                 <Image src={`/images/characters/png/${config.character}.png`} alt="" fill className="object-contain" sizes="40px" />
               </div>
             )}
 
-            {/* Sticker sheet preview — physical kit only */}
             {product === 'kit' && STICKER_FILES[config.theme] && (
               <div className="relative w-10 h-14 shrink-0">
                 <Image src={`/images/stickers/${STICKER_FILES[config.theme]}.png`} alt="" fill className="object-contain" sizes="40px" />
@@ -138,14 +143,7 @@ export default function DetailsPage() {
                 <p className="font-dm-sans text-xs text-ink/50 truncate mt-0.5">{config.subtitle}</p>
               )}
               <p className="font-dm-sans text-xs text-ink/40 mt-1">
-                {product === 'digital'
-                  ? `${tp('digital_name')}, ${tp('digital_price')} ${tp('digital_currency')}`
-                  : `${tp('kit_name')}, ${tp('kit_price')} ${tp('kit_currency')}`}
-                {local && (
-                  <span className="ml-1">
-                    · {formatLocal(product === 'digital' ? audCentsDigital : audCentsKit, local)} approx.
-                  </span>
-                )}
+                {product === 'digital' ? tp('digital_name') : tp('kit_name')} · {productPrice}
               </p>
             </div>
           </div>
@@ -162,7 +160,8 @@ export default function DetailsPage() {
           <Input label={`${t('name_label')} *`} value={form.name}  onChange={v => set('name', v)}  autoComplete="name"  placeholder="María González" />
           <Input label={`${t('email_label')} *`} value={form.email} onChange={v => set('email', v)} autoComplete="email" placeholder="maria@email.com" type="email" />
 
-          {isPhysical && (
+          {/* AU address form: only shown for Australian kit orders */}
+          {isAuKit && (
             <div className="border-t border-ink/10 pt-5 space-y-4">
               <h3 className="font-dm-sans-bold text-ink text-sm flex items-center gap-2">
                 🏠 {t('address_title')}
@@ -188,6 +187,15 @@ export default function DetailsPage() {
             </div>
           )}
 
+          {/* Non-AU kit: Stripe collects shipping address at payment */}
+          {isPhysical && !isAuKit && (
+            <div className="border-t border-ink/10 pt-5">
+              <p className="font-dm-sans text-sm text-ink/50 flex items-center gap-2">
+                🏠 {t('address_collected_stripe')}
+              </p>
+            </div>
+          )}
+
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-3 font-dm-sans text-sm text-red-700">{error}</div>
           )}
@@ -199,18 +207,11 @@ export default function DetailsPage() {
       {/* Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-ink/10 p-4 z-40">
         <div className="max-w-lg mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="font-dm-sans text-sm text-ink/60">
-            <p>
-              {product === 'digital'
-                ? `${tp('digital_name')}, ${tp('digital_price')} ${tp('digital_currency')}`
-                : `${tp('kit_name')}, ${tp('kit_price')} ${tp('kit_currency')} · ${t('shipping_days')}`}
-            </p>
-            {local && (
-              <p className="text-xs text-ink/40">
-                {formatLocal(product === 'digital' ? audCentsDigital : audCentsKit, local)} · Approx. Charged in AUD.
-              </p>
-            )}
-          </div>
+          <p className="font-dm-sans text-sm text-ink/60">
+            {product === 'digital'
+              ? `${tp('digital_name')} · ${productPrice}`
+              : `${tp('kit_name')} · ${productPrice}${isAuKit ? ` · ${t('shipping_days')}` : ''}`}
+          </p>
           <button
             onClick={handlePay}
             disabled={!isValid() || loading}
