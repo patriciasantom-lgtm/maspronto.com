@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
-import { REGIONS, DEFAULT_REGION, fmt } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
 import StepIndicator from '@/components/StepIndicator'
 import ProductCard from '@/components/ProductCard'
 
@@ -16,7 +16,12 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem('prontoRegion')
-    if (stored && REGIONS[stored]) setRegion(stored)
+    if (stored && REGIONS[stored]) {
+      setRegion(stored)
+    } else {
+      const geo = getGeoRegion()
+      if (geo) setRegion(geo)
+    }
   }, [])
 
   function handleContinue() {

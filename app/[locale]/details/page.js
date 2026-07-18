@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
-import { REGIONS, DEFAULT_REGION, fmt } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
 import Image from 'next/image'
 import StepIndicator from '@/components/StepIndicator'
 
@@ -57,7 +57,12 @@ export default function DetailsPage() {
     const canvas = localStorage.getItem('prontoCanvasUrl')
     if (canvas) setCanvasUrl(canvas)
     const storedRegion = localStorage.getItem('prontoRegion')
-    if (storedRegion && REGIONS[storedRegion]) setRegion(storedRegion)
+    if (storedRegion && REGIONS[storedRegion]) {
+      setRegion(storedRegion)
+    } else {
+      const geo = getGeoRegion()
+      if (geo) setRegion(geo)
+    }
   }, [router])
 
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }))

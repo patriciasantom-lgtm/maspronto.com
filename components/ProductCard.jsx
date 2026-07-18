@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import { REGIONS, DEFAULT_REGION, fmt } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
 
 export default function ProductCard({ type, selected, onSelect }) {
   const t = useTranslations('products')
@@ -11,7 +11,12 @@ export default function ProductCard({ type, selected, onSelect }) {
 
   useEffect(() => {
     const stored = localStorage.getItem('prontoRegion')
-    if (stored && REGIONS[stored]) setRegion(stored)
+    if (stored && REGIONS[stored]) {
+      setRegion(stored)
+    } else {
+      const geo = getGeoRegion()
+      if (geo) setRegion(geo)
+    }
   }, [])
 
   const r = REGIONS[region]

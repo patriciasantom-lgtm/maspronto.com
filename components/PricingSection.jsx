@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
-import { REGIONS, DEFAULT_REGION, REGION_ORDER, fmt } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, REGION_ORDER, fmt, getGeoRegion } from '@/lib/pricing'
 
 export default function PricingSection() {
   const t = useTranslations('home')
@@ -11,7 +11,12 @@ export default function PricingSection() {
 
   useEffect(() => {
     const stored = localStorage.getItem('prontoRegion')
-    if (stored && REGIONS[stored]) setRegion(stored)
+    if (stored && REGIONS[stored]) {
+      setRegion(stored)
+    } else {
+      const geo = getGeoRegion()
+      if (geo) setRegion(geo)
+    }
   }, [])
 
   function selectRegion(key) {
