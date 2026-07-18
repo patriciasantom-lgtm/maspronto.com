@@ -15,7 +15,7 @@ export default function Logo({ variant = 'dark', size = 'md', className = '' }) 
                             'text-lemon'
 
   const dotColor =
-    variant === 'outline' ? '#A8E6CF' : '#FF6B9D'
+    variant === 'outline' ? '#6BCB77' : '#FF6B4A'
 
   return (
     <span className={`relative inline-flex items-baseline ${className}`}>

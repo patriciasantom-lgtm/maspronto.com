@@ -51,7 +51,7 @@ export default function CheckoutPage() {
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           <Badge color="mint">{t('trust_stripe')}</Badge>
           <Badge color="lemon">{t('trust_au')}</Badge>
-          <Badge color="mint">{t('trust_guarantee')}</Badge>
+          <Badge color="sky">{t('trust_guarantee')}</Badge>
         </div>
       </div>
 
@@ -82,8 +82,9 @@ function Badge({ color, children }) {
   const classes = {
     mint:   'bg-mint text-ink',
     lemon:  'bg-lemon text-ink',
+    sky:    'bg-skyblue text-ink',
     ink:    'bg-ink text-mint',
-    pink:   'bg-bubblegum text-white',
+    pink:   'bg-bubblegum text-ink',
   }
   return (
     <span className={`${classes[color]} font-dm-sans-bold text-xs px-3 py-1.5 rounded-full`}>

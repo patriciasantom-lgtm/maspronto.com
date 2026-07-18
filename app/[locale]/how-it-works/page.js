@@ -54,7 +54,7 @@ export default async function HowItWorksPage() {
         </div>
 
         {/* CTA between steps and FAQ */}
-        <div className="bg-mint rounded-2xl px-8 py-10 text-center my-16">
+        <div className="bg-skyblue rounded-2xl px-8 py-10 text-center my-16">
           <p className="font-fraunces text-2xl text-ink mb-6">
             {t('mid_cta')}
           </p>

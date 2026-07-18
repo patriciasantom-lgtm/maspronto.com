@@ -3,9 +3,10 @@
 @theme inline {
   /* Pronto brand palette */
   --color-ink:       #1A1A1A;
-  --color-lemon:     #F5FF6E;
-  --color-mint:      #A8E6CF;
-  --color-bubblegum: #FF6B9D;
+  --color-lemon:     #FFD23F;
+  --color-mint:      #6BCB77;
+  --color-bubblegum: #FF6B4A;
+  --color-skyblue:   #4FB8E8;
   --color-pebble:    #F5F0E8;
 
   --color-cream:     #F5F0E8;
@@ -79,14 +80,14 @@ body {
 
 /* Ink on Lemon (buy action) */
 .btn-buy {
-  background: #F5FF6E;
+  background: #FFD23F;
   color: #1A1A1A;
 }
 
 /* Lemon on Ink (primary nav/general) */
 .btn-primary {
   background: #1A1A1A;
-  color: #F5FF6E;
+  color: #FFD23F;
 }
 
 /* Outline Ink */

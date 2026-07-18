@@ -77,7 +77,7 @@ export default function PricingSection() {
 
           {/* Kit */}
           <div className="rounded-2xl border-2 border-bubblegum bg-bubblegum/5 p-8 flex flex-col relative">
-            <span className="inline-block font-dm-sans-bold text-xs text-white bg-bubblegum px-3 py-1 rounded-full mb-6 self-start">
+            <span className="inline-block font-dm-sans-bold text-xs text-ink bg-bubblegum px-3 py-1 rounded-full mb-6 self-start">
               {t('pricing_kit_badge')}
             </span>
 
