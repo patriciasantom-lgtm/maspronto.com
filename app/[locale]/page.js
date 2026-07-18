@@ -59,7 +59,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 2. Emotional / Why ──────────────────────────────────── */}
-      <section className="bg-pebble py-20 px-4">
+      <section className="bg-white py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
             {t('moment_eyebrow')}
@@ -80,7 +80,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 3. Use Cases ────────────────────────────────────────── */}
-      <section className="bg-white py-20 px-4">
+      <section className="bg-palesky py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-3">{t('uses_h2')}</h2>
@@ -91,7 +91,7 @@ export default async function HomePage() {
               <Link
                 key={id}
                 href={`/create?theme=${id}`}
-                className="theme-card flex flex-col items-center gap-3 py-6 px-3 rounded-2xl border border-ink/10 bg-pebble text-center group"
+                className="theme-card flex flex-col items-center gap-3 py-6 px-3 rounded-2xl border border-ink/10 bg-white text-center group"
               >
                 <div className="theme-icon-wrap">
                   <img src={bw} alt={tMT(id)} className="theme-icon-bw" />
@@ -107,7 +107,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 4. How It Works (summary) ────────────────────────────── */}
-      <section className="bg-pebble py-20 px-4">
+      <section className="bg-white py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-3">
@@ -141,7 +141,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 5. Kit / Character Sheet ─────────────────────────────── */}
-      <section className="bg-pebble py-20 px-4">
+      <section className="bg-palecoral py-20 px-4">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           {/* Copy */}
           <div className="flex-1 text-center lg:text-left">
@@ -179,7 +179,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 5b. Theme Carousel ──────────────────────────────────── */}
-      <section className="bg-pebble py-16 px-4">
+      <section className="bg-white py-16 px-4">
         <div className="max-w-sm mx-auto text-center">
           <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-2">
             {locale === 'en' ? 'Pick your path' : 'Elegí tu camino'}
@@ -192,7 +192,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 6. Social Proof ─────────────────────────────────────── */}
-      <section className="bg-pebble py-20 px-4">
+      <section className="bg-palegrass py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-3">
@@ -242,7 +242,7 @@ function CharacterGrid() {
   const chars = ['A','B','C','D','E','F','G','H','I','J','K','L']
 
   return (
-    <div className="grid grid-cols-4 gap-2 bg-white/60 rounded-2xl p-4">
+    <div className="grid grid-cols-4 gap-2 bg-white rounded-2xl p-4">
       {chars.map(c => (
         <div
           key={c}

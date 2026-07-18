@@ -11,6 +11,12 @@
 
   --color-cream:     #F5F0E8;
 
+  /* Pale section tints */
+  --color-palesky:   #EAF6FC;
+  --color-palecoral: #FFF1EC;
+  --color-palegrass: #F1FAF0;
+  --color-paleshine: #FFF9E5;
+
   /* Semantic aliases */
   --color-bg:        #F5F0E8;
   --color-text:      #1A1A1A;

@@ -6,7 +6,7 @@ export default async function ShippingCountries() {
   const countries = t('countries').split(' · ')
 
   return (
-    <section className="bg-white py-20 px-4">
+    <section className="bg-paleshine py-20 px-4">
       <div className="max-w-2xl mx-auto text-center">
         <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-3">
           {t('eyebrow')}
