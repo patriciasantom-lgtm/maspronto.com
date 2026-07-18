@@ -69,11 +69,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-ink text-mint sticky top-0 z-50">
+      <nav className="bg-white border-b border-ink/10 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
 
           <Link href="/" className="shrink-0 no-underline">
-            <Logo variant="dark" size="md" />
+            <Logo variant="light" size="md" />
           </Link>
 
           {/* Desktop links */}
@@ -82,10 +82,10 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className={`font-dm-sans text-sm transition-colors hover:text-lemon ${
+                className={`font-dm-sans text-sm transition-colors hover:text-bubblegum ${
                   isActive(href)
-                    ? 'text-lemon underline decoration-bubblegum underline-offset-4 decoration-2'
-                    : 'text-mint/80'
+                    ? 'text-bubblegum underline decoration-bubblegum underline-offset-4 decoration-2'
+                    : 'text-ink/70'
                 }`}
               >
                 {t(labelKey)}
@@ -97,7 +97,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={switchLocale}
-              className="font-dm-sans-bold text-sm text-mint hover:text-lemon transition-colors px-2 py-1"
+              className="font-dm-sans-bold text-sm text-ink/70 hover:text-bubblegum transition-colors px-2 py-1"
               aria-label={`Switch to ${locale === 'es' ? 'English' : 'Español'}`}
             >
               {t('lang')}
@@ -109,7 +109,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMenuOpen(true)}
-              className="lg:hidden text-mint hover:text-lemon transition-colors p-1"
+              className="lg:hidden text-ink/70 hover:text-bubblegum transition-colors p-1"
               aria-label="Open menu"
             >
               <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

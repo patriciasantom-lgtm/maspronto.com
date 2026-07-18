@@ -26,26 +26,26 @@ export default async function HomePage() {
   return (
     <>
       {/* ── 1. Hero ─────────────────────────────────────────────── */}
-      <section className="bg-ink text-mint overflow-hidden">
+      <section className="bg-pebble overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 py-20 lg:py-28 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
           {/* Copy */}
           <div className="flex-1 text-center lg:text-left">
-            <p className="font-dm-sans text-sm text-mint/60 mb-4 tracking-wide">
+            <p className="font-dm-sans text-sm text-ink/60 mb-4 tracking-wide">
               {tH('eyebrow')}
             </p>
-            <h1 className="font-fraunces text-5xl sm:text-6xl lg:text-7xl text-mint leading-none mb-6">
+            <h1 className="font-fraunces text-5xl sm:text-6xl lg:text-7xl text-ink leading-none mb-6">
               {tH('h1_line1')}<br />
-              <span className="text-lemon">{tH('h1_highlight')}</span>
+              <span className="text-bubblegum">{tH('h1_highlight')}</span>
             </h1>
-            <p className="font-dm-sans text-lg text-mint/80 mb-10 max-w-lg mx-auto lg:mx-0">
+            <p className="font-dm-sans text-lg text-ink/70 mb-10 max-w-lg mx-auto lg:mx-0">
               {tH('subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <Link href="/create" className="btn btn-buy px-8 py-4 text-base">
                 {tH('cta_primary')}
               </Link>
-              <Link href="/why-this-works" className="btn border-2 border-mint/40 text-mint hover:border-mint hover:text-lemon px-8 py-4 text-base">
+              <Link href="/why-this-works" className="btn border-2 border-ink/20 text-ink/70 hover:border-bubblegum hover:text-bubblegum px-8 py-4 text-base">
                 {tH('cta_secondary')}
               </Link>
             </div>
@@ -107,7 +107,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 4. How It Works (summary) ────────────────────────────── */}
-      <section className="bg-mint py-20 px-4">
+      <section className="bg-pebble py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-3">
@@ -141,22 +141,22 @@ export default async function HomePage() {
       </section>
 
       {/* ── 5. Kit / Character Sheet ─────────────────────────────── */}
-      <section className="bg-ink py-20 px-4">
+      <section className="bg-pebble py-20 px-4">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           {/* Copy */}
           <div className="flex-1 text-center lg:text-left">
             <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
               {t('kit_eyebrow')}
             </p>
-            <h2 className="font-fraunces text-4xl sm:text-5xl text-lemon mb-6">
+            <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-6">
               {t('kit_h2')}
             </h2>
-            <p className="font-dm-sans text-lg text-mint/80 mb-8 leading-relaxed">
+            <p className="font-dm-sans text-lg text-ink/70 mb-8 leading-relaxed">
               {t('kit_body')}
             </p>
             <ul className="space-y-3 mb-8 text-left max-w-xs mx-auto lg:mx-0">
               {['kit_f1','kit_f2','kit_f3'].map(k => (
-                <li key={k} className="flex items-center gap-3 font-dm-sans text-sm text-mint">
+                <li key={k} className="flex items-center gap-3 font-dm-sans text-sm text-ink/80">
                   <span className="w-5 h-5 rounded-full bg-lemon flex items-center justify-center shrink-0">
                     <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
                       <path d="M1 4l2.5 2.5L9 1" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -223,13 +223,13 @@ export default async function HomePage() {
       <ShippingCountries />
 
       {/* ── 9. Final CTA ────────────────────────────────────────── */}
-      <section className="bg-lemon py-24 px-4">
+      <section className="bg-pebble py-24 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="font-fraunces text-4xl sm:text-6xl text-ink mb-4">
             {t('cta_h2')}
           </h2>
           <p className="font-dm-sans text-lg text-ink/70 mb-10">{t('cta_subtitle')}</p>
-          <Link href="/create" className="btn btn-primary px-10 py-5 text-lg">
+          <Link href="/create" className="btn btn-buy px-10 py-5 text-lg">
             {t('cta_btn')}
           </Link>
         </div>
@@ -242,11 +242,11 @@ function CharacterGrid() {
   const chars = ['A','B','C','D','E','F','G','H','I','J','K','L']
 
   return (
-    <div className="grid grid-cols-4 gap-2 bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
+    <div className="grid grid-cols-4 gap-2 bg-white/60 rounded-2xl p-4">
       {chars.map(c => (
         <div
           key={c}
-          className="relative rounded-xl overflow-hidden bg-white/20 border border-white/10"
+          className="relative rounded-xl overflow-hidden bg-pebble border border-ink/10"
           style={{ aspectRatio: '3/4' }}
         >
           <Image

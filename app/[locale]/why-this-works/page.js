@@ -34,11 +34,11 @@ export default async function WhyThisWorksPage() {
   return (
     <div className="bg-pebble min-h-screen">
       {/* Header */}
-      <div className="bg-ink py-20 px-4 text-center">
+      <div className="bg-pebble py-20 px-4 text-center">
         <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
           {t('eyebrow')}
         </p>
-        <h1 className="font-fraunces text-5xl sm:text-6xl text-lemon max-w-2xl mx-auto leading-tight">
+        <h1 className="font-fraunces text-5xl sm:text-6xl text-ink max-w-2xl mx-auto leading-tight">
           {t('h1')}
         </h1>
       </div>
@@ -82,8 +82,8 @@ export default async function WhyThisWorksPage() {
       </div>
 
       {/* CTA */}
-      <div className="bg-ink py-20 px-4 text-center">
-        <h2 className="font-fraunces text-4xl sm:text-5xl text-lemon mb-8">
+      <div className="bg-pebble py-20 px-4 text-center">
+        <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-8">
           {t('cta_h2')}
         </h2>
         <Link href="/create" className="btn btn-buy px-10 py-4 text-lg">

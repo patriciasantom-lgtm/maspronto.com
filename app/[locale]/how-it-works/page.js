@@ -28,11 +28,11 @@ export default async function HowItWorksPage() {
   return (
     <div className="bg-pebble min-h-screen">
       {/* Header */}
-      <div className="bg-ink py-20 px-4 text-center">
+      <div className="bg-pebble py-20 px-4 text-center">
         <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
           {t('eyebrow')}
         </p>
-        <h1 className="font-fraunces text-5xl sm:text-6xl text-lemon leading-tight">
+        <h1 className="font-fraunces text-5xl sm:text-6xl text-ink leading-tight">
           {t('h1')}
         </h1>
       </div>
