@@ -64,14 +64,19 @@ async function fulfillOrder(session) {
   await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl })
   console.log(`Physical kit PDF sent to ${customerEmail}`)
 
-  const country = session.shipping_details?.address?.country || 'AU'
+  // Stripe API 2026-06-24.dahlia moved shipping address to collected_information.shipping_details
+  const stripeShipping = session.collected_information?.shipping_details ?? session.shipping_details
+  if (!stripeShipping?.address?.country && product === 'kit') {
+    console.warn(`[fulfillOrder] No Stripe shipping country for session ${session.id} — assuming AU. collected_information: ${JSON.stringify(session.collected_information)}`)
+  }
+  const country = stripeShipping?.address?.country || 'AU'
 
   const shippingAddress = address || {
-    line1: session.shipping_details?.address?.line1 || '',
-    line2: session.shipping_details?.address?.line2 || '',
-    suburb: session.shipping_details?.address?.city || '',
-    state: session.shipping_details?.address?.state || '',
-    postcode: session.shipping_details?.address?.postal_code || '',
+    line1: stripeShipping?.address?.line1 || '',
+    line2: stripeShipping?.address?.line2 || '',
+    suburb: stripeShipping?.address?.city || '',
+    state: stripeShipping?.address?.state || '',
+    postcode: stripeShipping?.address?.postal_code || '',
   }
 
   if (country === 'AU') {
