@@ -86,13 +86,7 @@ export default function PricingSection() {
               {t('pricing_kit_badge')}
             </span>
 
-            {region === 'AU' ? (
-              <p className="font-fraunces text-4xl text-ink mb-4">
-                {fmt(r.kitTotalPrice, r.symbol)}
-                <span className="font-dm-sans text-base text-ink/40 ml-1">{r.currency.toUpperCase()}</span>
-              </p>
-            ) : (
-              <div className="mb-4">
+            <div className="mb-4">
                 <div className="flex justify-between font-dm-sans text-sm text-ink/60 mb-1">
                   <span>{t('pricing_product')}</span>
                   <span>{fmt(r.kitProductPrice, r.symbol)}</span>
@@ -109,7 +103,6 @@ export default function PricingSection() {
                   </span>
                 </div>
               </div>
-            )}
 
             <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_kit_title')}</h3>
             <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_kit_desc')}</p>

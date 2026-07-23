@@ -7,8 +7,6 @@ import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
 import Image from 'next/image'
 import StepIndicator from '@/components/StepIndicator'
 
-const STATES_AU = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA']
-
 const STICKER_FILES = {
   space:          'sticker_space',
   new_baby:       'sticker_newbaby',
@@ -44,9 +42,7 @@ export default function DetailsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const [form, setForm] = useState({
-    name: '', email: '', line1: '', line2: '', suburb: '', state: '', postcode: '',
-  })
+  const [form, setForm] = useState({ name: '', email: '' })
 
   useEffect(() => {
     const p = localStorage.getItem('prontoProduct')
@@ -67,13 +63,8 @@ export default function DetailsPage() {
 
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }))
   const isPhysical = product === 'kit'
-  const isAuKit = isPhysical && region === 'AU'
 
-  const isValid = () => {
-    if (!form.name.trim() || !form.email.includes('@')) return false
-    if (isAuKit) return form.line1.trim() && form.suburb.trim() && form.state && form.postcode.trim()
-    return true
-  }
+  const isValid = () => !!(form.name.trim() && form.email.includes('@'))
 
   const r = REGIONS[region]
 
@@ -92,7 +83,6 @@ export default function DetailsPage() {
         locale,
         region,
         customer: { name: form.name, email: form.email },
-        ...(isAuKit && { address: { line1: form.line1, line2: form.line2, suburb: form.suburb, state: form.state, postcode: form.postcode } }),
       }
 
       const res = await fetch('/api/create-checkout', {
@@ -165,35 +155,8 @@ export default function DetailsPage() {
           <Input label={`${t('name_label')} *`} value={form.name}  onChange={v => set('name', v)}  autoComplete="name"  placeholder="María González" />
           <Input label={`${t('email_label')} *`} value={form.email} onChange={v => set('email', v)} autoComplete="email" placeholder="maria@email.com" type="email" />
 
-          {/* AU address form: only shown for Australian kit orders */}
-          {isAuKit && (
-            <div className="border-t border-ink/10 pt-5 space-y-4">
-              <h3 className="font-dm-sans-bold text-ink text-sm flex items-center gap-2">
-                🏠 {t('address_title')}
-              </h3>
-              <Input label={`${t('address_line1')} *`} value={form.line1} onChange={v => set('line1', v)} autoComplete="address-line1" placeholder="123 Main Street" />
-              <div>
-                <label className="block font-dm-sans-bold text-sm text-ink mb-1">
-                  {t('address_line2')} <span className="font-normal text-ink/40">{t('address_line2_optional')}</span>
-                </label>
-                <input value={form.line2} onChange={e => set('line2', e.target.value)} placeholder="Unit 4" autoComplete="address-line2" className="w-full border border-ink/20 rounded-xl px-4 py-3 font-dm-sans text-sm focus:outline-none focus:ring-2 focus:ring-ink/30 bg-white" />
-              </div>
-              <Input label={`${t('suburb')} *`} value={form.suburb} onChange={v => set('suburb', v)} autoComplete="address-level2" placeholder="Dee Why" />
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-dm-sans-bold text-sm text-ink mb-1">{t('state')} *</label>
-                  <select value={form.state} onChange={e => set('state', e.target.value)} className="w-full border border-ink/20 rounded-xl px-4 py-3 font-dm-sans text-sm focus:outline-none focus:ring-2 focus:ring-ink/30 bg-white">
-                    <option value="">—</option>
-                    {STATES_AU.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
-                <Input label={`${t('postcode')} *`} value={form.postcode} onChange={v => set('postcode', v.replace(/\D/g,'').slice(0,4))} placeholder="2099" maxLength={4} autoComplete="postal-code" />
-              </div>
-            </div>
-          )}
-
-          {/* Non-AU kit: Stripe collects shipping address at payment */}
-          {isPhysical && !isAuKit && (
+          {/* Stripe collects shipping address at payment for all kit orders */}
+          {isPhysical && (
             <div className="border-t border-ink/10 pt-5">
               <p className="font-dm-sans text-sm text-ink/50 flex items-center gap-2">
                 🏠 {t('address_collected_stripe')}
@@ -215,7 +178,7 @@ export default function DetailsPage() {
           <p className="font-dm-sans text-sm text-ink/60">
             {product === 'digital'
               ? `${tp('digital_name')} · ${productPrice}`
-              : `${tp('kit_name')} · ${productPrice}${isAuKit ? ` · ${t('shipping_days')}` : ''}`}
+              : `${tp('kit_name')} · ${productPrice}`}
           </p>
           <button
             onClick={handlePay}

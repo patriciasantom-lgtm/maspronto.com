@@ -17,12 +17,6 @@ export async function POST(request) {
 
     const r = REGIONS[regionKey] ?? REGIONS[DEFAULT_REGION]
     const isDigital = product === 'digital'
-    const isAuKit = !isDigital && regionKey === 'AU'
-
-    // Address required only for AU kit (collected in our pre-Stripe form)
-    if (isAuKit && (!address?.line1 || !address?.suburb || !address?.state || !address?.postcode)) {
-      return Response.json({ error: 'Dirección de envío incompleta' }, { status: 400 })
-    }
 
     console.log('[DEBUG] Stripe key prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 12))
     const siteUrl = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://maspronto.com'
@@ -34,13 +28,8 @@ export async function POST(request) {
 
     // Line item amount:
     // - Digital: digitalPrice for the selected region
-    // - AU kit: kitTotalPrice (single amount, no shipping split)
-    // - Other kit: kitProductPrice only (shipping added via shipping_options)
-    const unitAmount = isDigital
-      ? r.digitalPrice
-      : isAuKit
-        ? r.kitTotalPrice
-        : r.kitProductPrice
+    // - Kit: kitProductPrice only (shipping added via shipping_options)
+    const unitAmount = isDigital ? r.digitalPrice : r.kitProductPrice
 
     const lineItems = [
       {
@@ -68,14 +57,6 @@ export async function POST(request) {
       customerEmail: customer.email,
     }
 
-    if (isAuKit && address) {
-      metadata.shippingLine1 = address.line1
-      metadata.shippingLine2 = address.line2 || ''
-      metadata.shippingSuburb = address.suburb
-      metadata.shippingState = address.state
-      metadata.shippingPostcode = address.postcode
-    }
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
@@ -86,8 +67,8 @@ export async function POST(request) {
       cancel_url: `${siteUrl}/${locale}/details`,
       metadata,
       payment_intent_data: { metadata },
-      // Non-AU kit: Stripe collects shipping address and shows shipping fee
-      ...(!isDigital && !isAuKit && {
+      // Kit: Stripe collects shipping address and shows shipping fee for all regions
+      ...(!isDigital && {
         shipping_address_collection: {
           allowed_countries: r.allowedCountries,
         },
@@ -98,7 +79,7 @@ export async function POST(request) {
             display_name: 'Standard Shipping',
             delivery_estimate: {
               minimum: { unit: 'business_day', value: 4 },
-              maximum: { unit: 'business_day', value: 7 },
+              maximum: { unit: 'business_day', value: 8 },
             },
           },
         }],

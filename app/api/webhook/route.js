@@ -2,7 +2,7 @@ import { stripe } from '@/lib/stripe'
 import { fetchJson, savePdf, savePng } from '@/lib/storage'
 import { generateMapPdfFromConfig, generateMapPngFromConfig } from '@/lib/generateMapPdf'
 import { createPrintfulOrder } from '@/lib/printful'
-import { sendDigitalDownloadEmail, sendDigitalDownloadEmailEn, sendPhysicalOrderEmail, notifyOwnerStickerFulfillment } from '@/lib/email'
+import { sendDigitalDownloadEmail, sendDigitalDownloadEmailEn, sendPhysicalOrderEmail } from '@/lib/email'
 import { v4 as uuidv4 } from 'uuid'
 
 // Raw body required for Stripe signature verification
@@ -79,22 +79,7 @@ async function fulfillOrder(session) {
     postcode: stripeShipping?.address?.postal_code || '',
   }
 
-  if (country === 'AU') {
-    // Australia: manual fulfillment — notify owner, no Printful call
-    console.log(`AU order ${orderId} — notifying owner for manual fulfillment`)
-    await notifyOwnerStickerFulfillment({
-      orderId,
-      stripeSessionId: session.id,
-      customer: { name: customerName, email: customerEmail },
-      address: shippingAddress,
-      config,
-    })
-    await sendPhysicalOrderEmail({ to: customerEmail, name: customerName, orderId, locale })
-    console.log(`AU physical order ${orderId} fulfilled (manual)`)
-    return
-  }
-
-  // Non-AU: dropship via Printful
+  // All regions: dropship via Printful
   const printPngBuffer = await generateMapPngFromConfig(config)
   const printFileUrl = await savePng(printPngBuffer, `map-${orderId}.png`)
 
