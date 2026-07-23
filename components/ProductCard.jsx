@@ -69,6 +69,12 @@ export default function ProductCard({ type, selected, onSelect }) {
           {isDigital ? t('digital_desc') : t('kit_desc')}
         </p>
 
+        {isDigital && (
+          <p className="font-dm-sans text-xs text-bubblegum bg-bubblegum/10 px-3 py-2 rounded-xl mb-4 leading-snug">
+            {t('charityBadge')}
+          </p>
+        )}
+
         {/* Includes (kit only) */}
         {!isDigital && (
           <div className="mb-4">

@@ -59,6 +59,11 @@ export default async function AboutPage() {
           {t('pull3_l2')}
         </Quote>
 
+        {/* Charity */}
+        <div className="bg-bubblegum/10 border-l-4 border-bubblegum rounded-r-2xl px-6 py-5">
+          <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('charityStory')}</p>
+        </div>
+
       </div>
 
       {/* CTA */}

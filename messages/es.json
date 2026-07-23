@@ -59,6 +59,7 @@
     "pricing_h2": "Tu formato, tu elección",
     "pricing_subtitle": "Ambos incluyen el mismo camino personalizado, solo se entregan diferente.",
     "pricing_digital_badge": "INSTANTÁNEO",
+    "charityBadge": "El 50% de cada PDF descargable ayuda a familias en Venezuela 🇻🇪",
     "pricing_digital_price": "$9.90",
     "pricing_digital_currency": "AUD",
     "pricing_digital_title": "PDF Digital",
@@ -102,6 +103,7 @@
     "body8": "Lo que empezó como una forma de preparar a una pequeña para un gran cambio en su vida se convirtió en algo mucho más grande. Estos caminos están diseñados para ayudar a los niños a entender la espera, navegar los cambios, y sentirse parte del recorrido. Ya sea que estén contando los días para un hermanito, un cumpleaños, unas vacaciones, una mudanza, o cualquier momento especial, el camino le da sentido a los días en el medio.",
     "pull3_l1": "Porque a veces la espera se siente tan importante como el destino.",
     "pull3_l2": "Y cada pequeño paso merece celebrarse.",
+    "charityStory": "Más pronto nació de un lugar muy personal. Por cada PDF descargable vendido, donamos el 50% a una fundación registrada que hace la diferencia en Venezuela — porque creemos en retribuir al lugar donde comenzó nuestra historia.",
     "cta_h2": "¿Lista para hacer mágica la espera?",
     "cta_btn": "Crear tu camino"
   },
@@ -133,6 +135,8 @@
     "faq_5_a": "Para descargas de PDF, vuelve al editor, corrígelo y descárgalo de nuevo. Solo necesitas pagar una vez. Para el Kit Físico, escríbenos a hola@maspronto.com y haremos todo lo posible para ayudarte.",
     "faq_6_q": "¿A qué países envían?",
     "faq_6_a": "Por ahora enviamos a Estados Unidos, Canadá, Reino Unido, todos los países de la Unión Europea, y Australia. Estamos trabajando para agregar más países pronto. Si el tuyo no está en la lista todavía, escríbenos a hola@maspronto.com o mándanos un DM por Instagram a @pattisantom y te avisamos cuando esté disponible.",
+    "faqCharity_q": "¿Mi compra apoya alguna causa?",
+    "faqCharity_a": "Sí. El 50% de cada compra del PDF descargable va a una fundación australiana registrada que apoya a Venezuela.",
     "mid_cta": "¿Quieres probarlo?",
     "cta_btn": "Empezar a diseñar →"
   },
@@ -146,6 +150,7 @@
     "title": "Elige tu formato",
     "selected": "✓ Seleccionado",
     "digital_badge": "DESCARGA INMEDIATA",
+    "charityBadge": "El 50% de cada PDF descargable ayuda a familias en Venezuela 🇻🇪",
     "digital_price": "$9.90",
     "digital_currency": "AUD",
     "digital_name": "PDF Digital",

@@ -23,6 +23,7 @@ export default async function HowItWorksPage() {
     { q: t('faq_4_q'), a: t('faq_4_a') },
     { q: t('faq_5_q'), a: t('faq_5_a') },
     { q: t('faq_6_q'), a: t('faq_6_a') },
+    { q: t('faqCharity_q'), a: t('faqCharity_a') },
   ]
 
   return (

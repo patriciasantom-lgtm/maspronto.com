@@ -59,6 +59,7 @@
     "pricing_h2": "Your format, your choice",
     "pricing_subtitle": "Both include the same personalised path, just delivered differently.",
     "pricing_digital_badge": "INSTANT",
+    "charityBadge": "50% of every Digital PDF goes toward helping families in Venezuela 🇻🇪",
     "pricing_digital_price": "$9.90",
     "pricing_digital_currency": "AUD",
     "pricing_digital_title": "PDF Digital",
@@ -102,6 +103,7 @@
     "body8": "What started as a way to prepare one little girl for a big life change became something much bigger. These paths are designed to help children understand waiting, navigate change, and feel part of the journey. Whether they're counting down to a new sibling, a birthday, a holiday, a move, or any special milestone, the path gives meaning to the days in between.",
     "pull3_l1": "Because sometimes the waiting feels just as important as the destination.",
     "pull3_l2": "And every little step deserves to be celebrated.",
+    "charityStory": "Más pronto was born from a very personal place. For every Digital PDF sold, we donate 50% to a registered charity making a difference in Venezuela — because we believe in giving back to where our story began.",
     "cta_h2": "Ready to make the wait magical?",
     "cta_btn": "Create your path"
   },
@@ -133,6 +135,8 @@
     "faq_5_a": "For PDF downloads, just go back to the editor, fix it, and download again. You only need to pay once. For the Physical Kit, email us at hola@maspronto.com and we'll do our best to help.",
     "faq_6_q": "Which countries do you ship to?",
     "faq_6_a": "We currently ship to the United States, Canada, the United Kingdom, all European Union countries, and Australia. We're working on adding more countries soon. If yours isn't listed yet, email us at hola@maspronto.com or send us a DM on Instagram @pattisantom and we'll let you know when it's available.",
+    "faqCharity_q": "Does my purchase support any cause?",
+    "faqCharity_a": "Yes. 50% of every Digital PDF purchase goes to a registered Australian charity supporting Venezuela.",
     "mid_cta": "Ready to give it a try?",
     "cta_btn": "Start designing →"
   },
@@ -146,6 +150,7 @@
     "title": "Choose your format",
     "selected": "✓ Selected",
     "digital_badge": "INSTANT DOWNLOAD",
+    "charityBadge": "50% of every Digital PDF goes toward helping families in Venezuela 🇻🇪",
     "digital_price": "$9.90",
     "digital_currency": "AUD",
     "digital_name": "PDF Digital",

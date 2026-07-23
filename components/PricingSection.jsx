@@ -68,13 +68,16 @@ export default function PricingSection() {
             </p>
             <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{t('pricing_digital_title')}</h3>
             <p className="font-dm-sans text-sm text-ink/60 mb-6">{t('pricing_digital_desc')}</p>
-            <ul className="space-y-2.5 mb-8 flex-1">
+            <ul className="space-y-2.5 mb-4 flex-1">
               {['pricing_digital_f1', 'pricing_digital_f2', 'pricing_digital_f3'].map(k => (
                 <li key={k} className="flex items-center gap-2 font-dm-sans text-sm text-ink/80">
                   <span className="text-mint text-base">✓</span> {t(k)}
                 </li>
               ))}
             </ul>
+            <p className="font-dm-sans text-xs text-bubblegum bg-bubblegum/10 px-3 py-2 rounded-xl mb-6 leading-snug">
+              {t('charityBadge')}
+            </p>
             <Link href="/create" className="btn btn-secondary py-3 text-sm w-full text-center">
               {t('pricing_digital_cta')}
             </Link>
