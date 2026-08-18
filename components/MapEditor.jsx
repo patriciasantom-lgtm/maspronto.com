@@ -34,8 +34,8 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const tMT = useTranslations('mapThemes')
 
   const [config, setConfig] = useState({
-    title:     tE('title_default'),
-    subtitle:  tE('subtitle_default'),
+    title:     tE('title_default').slice(0, TITLE_MAX_CHARS),
+    subtitle:  tE('subtitle_default').slice(0, SUBTITLE_MAX_CHARS),
     theme:     initialTheme || 'space',
     character: 'girl1',
     font:      'Bubblegum Sans',
@@ -51,7 +51,15 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   }))
 
   const update = useCallback((key, val) => {
-    setConfig(prev => ({ ...prev, [key]: val }))
+    // Defense in depth: native maxLength blocks typing/paste in modern browsers,
+    // but IME composition, autofill, or a future default/placeholder value can
+    // still slip a longer string into state. Clamp here so the limit is always
+    // reflected regardless of how the value arrived.
+    const clamped =
+      key === 'title'    ? val.slice(0, TITLE_MAX_CHARS) :
+      key === 'subtitle' ? val.slice(0, SUBTITLE_MAX_CHARS) :
+      val
+    setConfig(prev => ({ ...prev, [key]: clamped }))
   }, [])
 
   const updateFont = useCallback(async (fontId) => {
@@ -312,7 +320,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
                   >
                     {titleLayout?.lines?.length
                       ? titleLayout.lines.map((line, i) => <div key={i}>{line}</div>)
-                      : config.title}
+                      : config.title.slice(0, TITLE_MAX_CHARS)}
                   </div>
                 )}
                 {config.subtitle && (
@@ -326,7 +334,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
                       textShadow: '0 1px 2px rgba(255,255,255,0.9)',
                     }}
                   >
-                    {config.subtitle}
+                    {config.subtitle.slice(0, SUBTITLE_MAX_CHARS)}
                   </div>
                 )}
               </div>
