@@ -303,15 +303,14 @@
     "sorpresa": "Surprise!"
   },
   "themes": {
-    "none": "No theme",
-    "stars": "Stars",
-    "jungle": "Jungle",
-    "unicorns": "Unicorns",
-    "animals": "Animals",
-    "planets": "Space",
-    "sea": "Ocean",
-    "dinosaurs": "Dinosaurs",
-    "princesses": "Princesses"
+    "no_theme":       "No Theme",
+    "space":          "Space",
+    "new_baby":       "New Baby",
+    "school":         "First Day of School",
+    "holiday_beach":  "Beach Holiday",
+    "new_home":       "New Home",
+    "happy_birthday": "Birthday",
+    "christmas":      "Christmas Advent"
   },
   "terms": {
     "title": "Terms & Conditions",

@@ -5,7 +5,7 @@ import { THEMES } from '@/lib/themes'
 // URL: /render/stickers?theme=jungle
 
 function StickerGrid({ theme }) {
-  const themeData = THEMES[theme] || THEMES.none
+  const themeData = THEMES[theme] || THEMES.no_theme
   const emojis = themeData.emojis
 
   // Generate 63 stickers (9 columns × 7 rows)
@@ -77,7 +77,7 @@ export default async function StickersRenderPage({ searchParams }) {
         <style>{`* { margin: 0; padding: 0; box-sizing: border-box; }`}</style>
       </head>
       <body>
-        <StickerGrid theme={theme || 'none'} />
+        <StickerGrid theme={theme || 'no_theme'} />
       </body>
     </html>
   )

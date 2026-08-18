@@ -303,15 +303,14 @@
     "sorpresa": "¡Sorpresa!"
   },
   "themes": {
-    "none": "Sin tema",
-    "stars": "Estrellas",
-    "jungle": "Selva",
-    "unicorns": "Unicornios",
-    "animals": "Animales",
-    "planets": "Planetas",
-    "sea": "Mar",
-    "dinosaurs": "Dinosaurios",
-    "princesses": "Princesas"
+    "no_theme":       "Sin Tema",
+    "space":          "Espacio",
+    "new_baby":       "Nuevo Bebé",
+    "school":         "Primer Día de Colegio",
+    "holiday_beach":  "Vacaciones en la Playa",
+    "new_home":       "Casa Nueva",
+    "happy_birthday": "Cumpleaños",
+    "christmas":      "Adviento de Navidad"
   },
   "terms": {
     "title": "Términos y condiciones",
