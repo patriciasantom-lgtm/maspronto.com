@@ -26,8 +26,8 @@ const CHARACTERS = [
   { id: 'boy3',  file: '/images/characters/png/boy3.png',  alt: 'Boy 3' },
 ]
 
-const TITLE_MAX_CHARS    = 45
-const SUBTITLE_MAX_CHARS = 55
+const TITLE_MAX_CHARS    = 24
+const SUBTITLE_MAX_CHARS = 24
 
 const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const tE  = useTranslations('editor')
