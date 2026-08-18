@@ -15,6 +15,13 @@ export async function POST(request) {
       return Response.json({ error: 'Producto inválido' }, { status: 400 })
     }
 
+    if (config.title && config.title.length > 45) {
+      return Response.json({ error: 'El título supera el límite de 45 caracteres' }, { status: 400 })
+    }
+    if (config.subtitle && config.subtitle.length > 55) {
+      return Response.json({ error: 'El subtítulo supera el límite de 55 caracteres' }, { status: 400 })
+    }
+
     const r = REGIONS[regionKey] ?? REGIONS[DEFAULT_REGION]
     const isDigital = product === 'digital'
 

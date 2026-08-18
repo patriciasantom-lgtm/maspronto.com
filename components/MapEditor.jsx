@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useImperativeHandle, useState, forwardRef } from 'react'
+import { useCallback, useEffect, useImperativeHandle, useRef, useState, forwardRef } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { FONTS } from '@/lib/themes'
+import { fitAndWrapText } from '@/lib/textLayout'
 
 const MAP_THEMES = [
   { id: 'space',          folder: 'spacepath',     prefix: 'space',    days: 21 },
@@ -25,6 +26,9 @@ const CHARACTERS = [
   { id: 'boy3',  file: '/images/characters/png/boy3.png',  alt: 'Boy 3' },
 ]
 
+const TITLE_MAX_CHARS    = 45
+const SUBTITLE_MAX_CHARS = 55
+
 const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const tE  = useTranslations('editor')
   const tMT = useTranslations('mapThemes')
@@ -36,6 +40,11 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
     character: 'girl1',
     font:      'Bubblegum Sans',
   })
+
+  // Canvas-measured title layout: lines[], titleFontPx, subtitlePx
+  // null = not yet computed, CSS fallback is used in the meantime
+  const [titleLayout, setTitleLayout] = useState(null)
+  const previewContainerRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
     getConfig: () => config,
@@ -51,6 +60,57 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
     }
     setConfig(prev => ({ ...prev, font: fontId }))
   }, [])
+
+  // Recompute preview text layout whenever title or font changes.
+  // Uses the same balanced-split + font-reduction algorithm as generateMapPngFromConfig,
+  // so the preview matches the final product without desync risk.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let cancelled = false
+
+    async function compute() {
+      // Wait for Google Fonts to finish loading so measureText is accurate
+      await document.fonts.ready
+      if (cancelled) return
+
+      const container = previewContainerRef.current
+      if (!container) return
+      const containerW = container.offsetWidth
+      if (!containerW) return
+
+      // Scale proportionally to backend canvas (1190px, title 52pt, min 18pt).
+      // 70% of containerW matches TITLE_MAX_W = PAGE_W * 0.70 in generateMapPngFromConfig.
+      const scale     = containerW / 1190
+      const initialPx = Math.max(8, Math.round(52 * scale))
+      const minPx     = Math.max(6, Math.round(18 * scale))
+      const subPx     = Math.max(6, Math.round(24 * scale))
+      const maxTextW  = containerW * 0.70
+
+      if (!config.title) {
+        if (!cancelled) setTitleLayout({ lines: [], titleFontPx: initialPx, subtitlePx: subPx })
+        return
+      }
+
+      const offscreen = document.createElement('canvas')
+      const ctx = offscreen.getContext('2d')
+
+      const { lines, size } = fitAndWrapText(
+        config.title.slice(0, TITLE_MAX_CHARS),
+        maxTextW,
+        initialPx,
+        minPx,
+        (text, sz) => {
+          ctx.font = `700 ${sz}px '${config.font}', cursive`
+          return ctx.measureText(text).width
+        }
+      )
+
+      if (!cancelled) setTitleLayout({ lines, titleFontPx: size, subtitlePx: subPx })
+    }
+
+    compute()
+    return () => { cancelled = true }
+  }, [config.title, config.font])
 
   const currentMap  = MAP_THEMES.find(m => m.id === config.theme)
   const isChristmas = currentMap?.days === 24
@@ -149,8 +209,17 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
             onChange={e => update('title', e.target.value)}
             className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A1A1A]/30 bg-white"
             placeholder={tE('titlePlaceholder')}
-            maxLength={60}
+            maxLength={TITLE_MAX_CHARS}
           />
+          <div className="flex justify-end mt-1">
+            <span className={`text-xs tabular-nums ${
+              config.title.length >= TITLE_MAX_CHARS        ? 'text-red-500 font-medium' :
+              config.title.length >= TITLE_MAX_CHARS * 0.85 ? 'text-amber-500' :
+              'text-gray-400'
+            }`}>
+              {config.title.length}/{TITLE_MAX_CHARS}
+            </span>
+          </div>
         </div>
 
         {/* Subtitle */}
@@ -164,8 +233,17 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
             onChange={e => update('subtitle', e.target.value)}
             className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A1A1A]/30 bg-white"
             placeholder={tE('subtitlePlaceholder')}
-            maxLength={80}
+            maxLength={SUBTITLE_MAX_CHARS}
           />
+          <div className="flex justify-end mt-1">
+            <span className={`text-xs tabular-nums ${
+              config.subtitle.length >= SUBTITLE_MAX_CHARS        ? 'text-red-500 font-medium' :
+              config.subtitle.length >= SUBTITLE_MAX_CHARS * 0.85 ? 'text-amber-500' :
+              'text-gray-400'
+            }`}>
+              {config.subtitle.length}/{SUBTITLE_MAX_CHARS}
+            </span>
+          </div>
         </div>
 
         {/* Font */}
@@ -200,7 +278,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
 
         <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* A3 aspect ratio container */}
-          <div className="relative w-full" style={{ paddingBottom: '141.4%' }}>
+          <div ref={previewContainerRef} className="relative w-full" style={{ paddingBottom: '141.4%' }}>
 
             {/* Layer 1 — combined map + character image */}
             <Image
@@ -212,38 +290,45 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
               sizes="(max-width: 768px) 90vw, 384px"
             />
 
-            {/* Layer 2 — title */}
-            {config.title && (
+            {/* Layers 2+3 — title + subtitle in ONE flow container so subtitle always
+                sits below the last title line, never at a fixed position.
+                Font size and line breaks are computed by the same algorithm
+                used by generateMapPngFromConfig (see textLayout.js). */}
+            {(config.title || config.subtitle) && (
               <div
-                className="absolute z-20 left-1/2 -translate-x-1/2 text-center w-4/5"
-                style={{
-                  top: '3%',
-                  fontFamily: `'${config.font}', cursive`,
-                  color: '#1A1A1A',
-                  fontSize: 'clamp(11px, 2.8vw, 20px)',
-                  fontWeight: 700,
-                  lineHeight: 1.2,
-                  textShadow: '0 1px 3px rgba(255,255,255,0.9)',
-                }}
+                className="absolute z-20 left-1/2 -translate-x-1/2 w-[70%] text-center"
+                style={{ top: '3%' }}
               >
-                {config.title}
-              </div>
-            )}
-
-            {/* Layer 3 — subtitle */}
-            {config.subtitle && (
-              <div
-                className="absolute z-20 left-1/2 -translate-x-1/2 text-center w-4/5"
-                style={{
-                  top: '9%',
-                  fontFamily: 'DM Sans, sans-serif',
-                  color: '#1A1A1A',
-                  fontSize: 'clamp(8px, 1.6vw, 13px)',
-                  lineHeight: 1.3,
-                  textShadow: '0 1px 2px rgba(255,255,255,0.9)',
-                }}
-              >
-                {config.subtitle}
+                {config.title && (
+                  <div
+                    style={{
+                      fontFamily: `'${config.font}', cursive`,
+                      color: '#1A1A1A',
+                      fontSize: titleLayout ? `${titleLayout.titleFontPx}px` : 'clamp(11px, 2.8vw, 20px)',
+                      fontWeight: 700,
+                      lineHeight: 1.2,
+                      textShadow: '0 1px 3px rgba(255,255,255,0.9)',
+                    }}
+                  >
+                    {titleLayout?.lines?.length
+                      ? titleLayout.lines.map((line, i) => <div key={i}>{line}</div>)
+                      : config.title}
+                  </div>
+                )}
+                {config.subtitle && (
+                  <div
+                    style={{
+                      marginTop: '4px',
+                      fontFamily: 'DM Sans, sans-serif',
+                      color: '#1A1A1A',
+                      fontSize: titleLayout ? `${titleLayout.subtitlePx}px` : 'clamp(8px, 1.6vw, 13px)',
+                      lineHeight: 1.3,
+                      textShadow: '0 1px 2px rgba(255,255,255,0.9)',
+                    }}
+                  >
+                    {config.subtitle}
+                  </div>
+                )}
               </div>
             )}
           </div>
