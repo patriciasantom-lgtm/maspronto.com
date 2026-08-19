@@ -69,6 +69,7 @@ export async function POST(request) {
       line_items: lineItems,
       mode: 'payment',
       currency: r.currency,
+      allow_promotion_codes: true,
       customer_email: customer.email,
       success_url: `${siteUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/${locale}/details`,
