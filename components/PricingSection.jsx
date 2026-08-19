@@ -75,9 +75,6 @@ export default function PricingSection() {
                 </li>
               ))}
             </ul>
-            <p className="font-dm-sans text-xs text-bubblegum bg-bubblegum/10 px-3 py-2 rounded-xl mb-6 leading-snug">
-              {t('charityBadge')}
-            </p>
             <Link href="/create" className="btn btn-secondary py-3 text-sm w-full text-center">
               {t('pricing_digital_cta')}
             </Link>
