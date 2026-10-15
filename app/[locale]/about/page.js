@@ -1,16 +1,17 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
+import Reveal from '@/components/Reveal'
 
 export async function generateMetadata() {
   return { title: 'Our story | Pronto' }
 }
 
 const Quote = ({ children }) => (
-  <blockquote className="border-l-4 border-bubblegum pl-6 py-4 my-2">
+  <Reveal as="blockquote" className="border-l-4 border-bubblegum pl-6 py-4 my-2">
     <p className="font-fraunces text-xl sm:text-2xl text-ink italic leading-snug">
       {children}
     </p>
-  </blockquote>
+  </Reveal>
 )
 
 export default async function AboutPage() {
@@ -20,10 +21,10 @@ export default async function AboutPage() {
     <div className="bg-pebble min-h-screen">
       {/* Header */}
       <div className="bg-pebble py-20 px-4 text-center">
-        <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
+        <p className="hero-in font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
           {t('eyebrow')}
         </p>
-        <h1 className="font-fraunces text-5xl sm:text-6xl text-ink max-w-2xl mx-auto">
+        <h1 className="hero-in hero-in-delay-1 font-fraunces text-5xl sm:text-6xl text-ink max-w-2xl mx-auto">
           {t('h1')}
         </h1>
       </div>
@@ -31,16 +32,16 @@ export default async function AboutPage() {
       {/* Story */}
       <div className="max-w-2xl mx-auto px-4 py-16 space-y-6">
 
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body1')}</p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body2')}</p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body3')}</p>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body1')}</Reveal>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body2')}</Reveal>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body3')}</Reveal>
 
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body4')}</p>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body4')}</Reveal>
 
         {/* Quote 1 */}
         <Quote>{t('pull1')}</Quote>
 
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body5')}</p>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body5')}</Reveal>
 
         {/* Quote 2 */}
         <Quote>
@@ -49,9 +50,9 @@ export default async function AboutPage() {
           {t('pull2_l3')}
         </Quote>
 
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body6')}</p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body7')}</p>
-        <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body8')}</p>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body6')}</Reveal>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body7')}</Reveal>
+        <Reveal as="p" className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('body8')}</Reveal>
 
         {/* Quote 3 */}
         <Quote>
@@ -62,14 +63,14 @@ export default async function AboutPage() {
       </div>
 
       {/* CTA */}
-      <div className="bg-pebble py-20 px-4 text-center">
+      <Reveal className="bg-pebble py-20 px-4 text-center">
         <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-8">
           {t('cta_h2')}
         </h2>
         <Link href="/create" className="btn btn-buy px-10 py-4 text-lg">
           {t('cta_btn')}
         </Link>
-      </div>
+      </Reveal>
     </div>
   )
 }

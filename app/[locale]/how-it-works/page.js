@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import FaqAccordion from '@/components/FaqAccordion'
+import Reveal from '@/components/Reveal'
 
 export async function generateMetadata() {
   return { title: 'How it works | Pronto' }
@@ -29,10 +30,10 @@ export default async function HowItWorksPage() {
     <div className="bg-pebble min-h-screen">
       {/* Header */}
       <div className="bg-pebble py-20 px-4 text-center">
-        <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
+        <p className="hero-in font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
           {t('eyebrow')}
         </p>
-        <h1 className="font-fraunces text-5xl sm:text-6xl text-ink leading-tight">
+        <h1 className="hero-in hero-in-delay-1 font-fraunces text-5xl sm:text-6xl text-ink leading-tight">
           {t('h1')}
         </h1>
       </div>
@@ -40,34 +41,36 @@ export default async function HowItWorksPage() {
       {/* Steps */}
       <div className="max-w-3xl mx-auto px-4 py-16">
         <div className="space-y-10">
-          {steps.map(({ n, title, body }) => (
-            <div key={n} className="flex gap-6 items-start">
-              <div className="shrink-0 w-14 h-14 rounded-full bg-ink text-lemon font-fraunces text-xl flex items-center justify-center">
+          {steps.map(({ n, title, body }, i) => (
+            <Reveal key={n} delay={i * 90} className="flex gap-6 items-start">
+              <div className="step-pop shrink-0 w-14 h-14 rounded-full bg-ink text-lemon font-fraunces text-xl flex items-center justify-center">
                 {n}
               </div>
               <div className="pt-1">
                 <h2 className="font-dm-sans-bold text-xl text-ink mb-2">{title}</h2>
                 <p className="font-dm-sans text-base text-ink/70 leading-relaxed">{body}</p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
 
         {/* CTA between steps and FAQ */}
-        <div className="bg-skyblue rounded-2xl px-8 py-10 text-center my-16">
+        <Reveal className="bg-skyblue rounded-2xl px-8 py-10 text-center my-16">
           <p className="font-fraunces text-2xl text-ink mb-6">
             {t('mid_cta')}
           </p>
           <Link href="/create" className="btn btn-primary px-8 py-4 text-base">
             {t('cta_btn')}
           </Link>
-        </div>
+        </Reveal>
 
         {/* FAQ */}
-        <h2 className="font-fraunces text-3xl sm:text-4xl text-ink mb-8 text-center">
+        <Reveal as="h2" className="font-fraunces text-3xl sm:text-4xl text-ink mb-8 text-center">
           {t('faq_title')}
-        </h2>
-        <FaqAccordion items={faqs} />
+        </Reveal>
+        <Reveal>
+          <FaqAccordion items={faqs} />
+        </Reveal>
       </div>
     </div>
   )

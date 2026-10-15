@@ -21,6 +21,14 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [hash, setHash] = useState('')
   const [pricingVisible, setPricingVisible] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     const update = () => setHash(window.location.hash)
@@ -69,7 +77,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white border-b border-ink/10 sticky top-0 z-50">
+      <nav className={`bg-white border-b border-ink/10 sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'nav-scrolled' : ''}`}>
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
 
           <Link href="/" className="shrink-0 no-underline">
