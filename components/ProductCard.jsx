@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, DIGITAL_PRICE, fmt, getGeoRegion } from '@/lib/pricing'
 
 export default function ProductCard({ type, selected, onSelect }) {
   const t = useTranslations('products')
@@ -20,8 +20,9 @@ export default function ProductCard({ type, selected, onSelect }) {
   }, [])
 
   const r = REGIONS[region]
-  const price = isDigital ? r.digitalPrice : r.kitTotalPrice
-  const priceLabel = `${fmt(price, r.symbol)} ${r.currency.toUpperCase()}`
+  const priceLabel = isDigital
+    ? `${fmt(DIGITAL_PRICE.amount, DIGITAL_PRICE.symbol)} ${DIGITAL_PRICE.currency.toUpperCase()}`
+    : `${fmt(r.kitTotalPrice, r.symbol)} ${r.currency.toUpperCase()}`
 
   return (
     <button

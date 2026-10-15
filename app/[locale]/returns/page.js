@@ -23,18 +23,6 @@ export default async function ReturnsPage() {
           </section>
 
           <section>
-            <h2 className="font-dm-sans-bold text-base text-ink mb-3">{t('s2_h')}</h2>
-            <p className="font-dm-sans text-base text-ink/80 leading-relaxed mb-3">{t('s2_intro')}</p>
-            <ul className="space-y-2 pl-4 mb-4">
-              <li className="font-dm-sans text-base text-ink/80 leading-relaxed list-disc">{t('s2_li1')}</li>
-              <li className="font-dm-sans text-base text-ink/80 leading-relaxed list-disc">{t('s2_li2')}</li>
-              <li className="font-dm-sans text-base text-ink/80 leading-relaxed list-disc">{t('s2_li3')}</li>
-            </ul>
-            <p className="font-dm-sans text-base text-ink/80 leading-relaxed mb-4">{t('s2_p2')}</p>
-            <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('s2_p3')}</p>
-          </section>
-
-          <section>
             <h2 className="font-dm-sans-bold text-base text-ink mb-3">{t('s3_h')}</h2>
             <p className="font-dm-sans text-base text-ink/80 leading-relaxed">{t('s3_p')}</p>
           </section>

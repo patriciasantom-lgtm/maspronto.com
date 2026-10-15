@@ -1,10 +1,9 @@
 import { getTranslations, getLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import Image from 'next/image'
 import MapCarousel from '@/components/MapCarousel'
 import ThemeCarousel from '@/components/ThemeCarousel'
 import PricingSection from '@/components/PricingSection'
-import ShippingCountries from '@/components/ShippingCountries'
+import Reveal from '@/components/Reveal'
 
 const MAP_ICONS = [
   { id: 'space',          bw: '/images/iconos/bw/icon_space.png',     colour: '/images/iconos/colour/iconcolour_space.png' },
@@ -31,17 +30,17 @@ export default async function HomePage() {
 
           {/* Copy */}
           <div className="flex-1 text-center lg:text-left">
-            <p className="font-dm-sans text-sm text-ink/60 mb-4 tracking-wide">
+            <p className="hero-in font-dm-sans text-sm text-ink/60 mb-4 tracking-wide">
               {tH('eyebrow')}
             </p>
-            <h1 className="font-fraunces text-5xl sm:text-6xl lg:text-7xl text-ink leading-none mb-6">
+            <h1 className="hero-in hero-in-delay-1 font-fraunces text-5xl sm:text-6xl lg:text-7xl text-ink leading-none mb-6">
               {tH('h1_line1')}<br />
               <span className="text-bubblegum">{tH('h1_highlight')}</span>
             </h1>
-            <p className="font-dm-sans text-lg text-ink/70 mb-10 max-w-lg mx-auto lg:mx-0">
+            <p className="hero-in hero-in-delay-2 font-dm-sans text-lg text-ink/70 mb-10 max-w-lg mx-auto lg:mx-0">
               {tH('subtitle')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+            <div className="hero-in hero-in-delay-3 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <Link href="/create" className="btn btn-buy px-8 py-4 text-base">
                 {tH('cta_primary')}
               </Link>
@@ -52,7 +51,7 @@ export default async function HomePage() {
           </div>
 
           {/* Map carousel */}
-          <div className="shrink-0 w-full max-w-xs lg:max-w-sm">
+          <div className="hero-in hero-in-delay-4 shrink-0 w-full max-w-xs lg:max-w-sm">
             <MapCarousel />
           </div>
         </div>
@@ -60,7 +59,7 @@ export default async function HomePage() {
 
       {/* ── 2. Emotional / Why ──────────────────────────────────── */}
       <section className="bg-white py-20 px-4">
-        <div className="max-w-3xl mx-auto text-center">
+        <Reveal className="max-w-3xl mx-auto text-center">
           <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
             {t('moment_eyebrow')}
           </p>
@@ -76,31 +75,32 @@ export default async function HomePage() {
           <blockquote className="border-l-4 border-bubblegum pl-6 text-left max-w-xl mx-auto">
             <p className="font-fraunces text-2xl text-ink italic">{t('moment_pull')}</p>
           </blockquote>
-        </div>
+        </Reveal>
       </section>
 
       {/* ── 3. Use Cases ────────────────────────────────────────── */}
       <section className="bg-palesky py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-3">{t('uses_h2')}</h2>
             <p className="font-dm-sans text-ink/60">{t('uses_subtitle')}</p>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {MAP_ICONS.map(({ id, bw, colour }) => (
-              <Link
-                key={id}
-                href={`/create?theme=${id}`}
-                className="theme-card flex flex-col items-center gap-3 py-6 px-3 rounded-2xl border border-ink/10 bg-white text-center group"
-              >
-                <div className="theme-icon-wrap">
-                  <img src={bw} alt={tMT(id)} className="theme-icon-bw" />
-                  <img src={colour} alt="" aria-hidden="true" className="theme-icon-colour" />
-                </div>
-                <span className="font-dm-sans text-xs text-ink/70 group-hover:text-ink leading-tight">
-                  {tMT(id)}
-                </span>
-              </Link>
+            {MAP_ICONS.map(({ id, bw, colour }, i) => (
+              <Reveal key={id} delay={i * 60}>
+                <Link
+                  href={`/create?theme=${id}`}
+                  className="theme-card card-hover flex flex-col items-center gap-3 py-6 px-3 rounded-2xl border border-ink/10 bg-white text-center group"
+                >
+                  <div className="theme-icon-wrap">
+                    <img src={bw} alt={tMT(id)} className="theme-icon-bw" />
+                    <img src={colour} alt="" aria-hidden="true" className="theme-icon-colour" />
+                  </div>
+                  <span className="font-dm-sans text-xs text-ink/70 group-hover:text-ink leading-tight">
+                    {tMT(id)}
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -109,26 +109,26 @@ export default async function HomePage() {
       {/* ── 4. How It Works (summary) ────────────────────────────── */}
       <section className="bg-white py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <Reveal className="text-center mb-14">
             <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-3">
               {t('how_eyebrow')}
             </p>
             <h2 className="font-fraunces text-4xl sm:text-5xl text-ink">{t('how_h2')}</h2>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12">
             {[
               { n: '01', title: t('how_step1_title'), body: t('how_step1_body') },
               { n: '02', title: t('how_step2_title'), body: t('how_step2_body') },
               { n: '03', title: t('how_step3_title'), body: t('how_step3_body') },
-            ].map(({ n, title, body }) => (
-              <div key={n} className="text-center">
-                <div className="w-12 h-12 rounded-full bg-ink text-lemon font-dm-sans-bold text-sm flex items-center justify-center mx-auto mb-4">
+            ].map(({ n, title, body }, i) => (
+              <Reveal key={n} delay={i * 120} className="text-center">
+                <div className="step-pop w-12 h-12 rounded-full bg-ink text-lemon font-dm-sans-bold text-sm flex items-center justify-center mx-auto mb-4">
                   {n}
                 </div>
                 <h3 className="font-dm-sans-bold text-lg text-ink mb-2">{title}</h3>
                 <p className="font-dm-sans text-sm text-ink/70 leading-relaxed">{body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
 
@@ -140,47 +140,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 5. Kit / Character Sheet ─────────────────────────────── */}
-      <section className="bg-palecoral py-20 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
-          {/* Copy */}
-          <div className="flex-1 text-center lg:text-left">
-            <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-4">
-              {t('kit_eyebrow')}
-            </p>
-            <h2 className="font-fraunces text-4xl sm:text-5xl text-ink mb-6">
-              {t('kit_h2')}
-            </h2>
-            <p className="font-dm-sans text-lg text-ink/70 mb-8 leading-relaxed">
-              {t('kit_body')}
-            </p>
-            <ul className="space-y-3 mb-8 text-left max-w-xs mx-auto lg:mx-0">
-              {['kit_f1','kit_f2','kit_f3'].map(k => (
-                <li key={k} className="flex items-center gap-3 font-dm-sans text-sm text-ink/80">
-                  <span className="w-5 h-5 rounded-full bg-lemon flex items-center justify-center shrink-0">
-                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4l2.5 2.5L9 1" stroke="#1A1A1A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
-                  {t(k)}
-                </li>
-              ))}
-            </ul>
-            <Link href="/create" className="btn btn-buy px-8 py-4 text-base">
-              {t('kit_cta')}
-            </Link>
-          </div>
-
-          {/* Visual: character grid */}
-          <div className="shrink-0 flex flex-col items-center gap-2">
-            <CharacterGrid />
-          </div>
-        </div>
-      </section>
-
       {/* ── 5b. Theme Carousel ──────────────────────────────────── */}
       <section className="bg-white py-16 px-4">
-        <div className="max-w-sm mx-auto text-center">
+        <Reveal className="max-w-sm mx-auto text-center">
           <p className="font-dm-sans-bold text-sm text-ink/50 uppercase tracking-widest mb-2">
             {locale === 'en' ? 'Pick your path' : 'Elegí tu camino'}
           </p>
@@ -188,29 +150,29 @@ export default async function HomePage() {
             {locale === 'en' ? 'Choose your theme' : 'Elegí tu tema'}
           </h3>
           <ThemeCarousel />
-        </div>
+        </Reveal>
       </section>
 
       {/* ── 6. Social Proof ─────────────────────────────────────── */}
       <section className="bg-palegrass py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <Reveal className="text-center mb-12">
             <p className="font-dm-sans-bold text-sm text-bubblegum uppercase tracking-widest mb-3">
               {t('proof_eyebrow')}
             </p>
             <h2 className="font-fraunces text-4xl sm:text-5xl text-ink">{t('proof_h2')}</h2>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               { quote: t('proof_1_quote'), author: t('proof_1_author') },
               { quote: t('proof_2_quote'), author: t('proof_2_author') },
               { quote: t('proof_3_quote'), author: t('proof_3_author') },
             ].map(({ quote, author }, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm">
+              <Reveal key={i} delay={i * 100} className="card-hover bg-white rounded-2xl p-6 shadow-sm">
                 <p className="font-dm-sans text-2xl text-bubblegum mb-3 leading-none">"</p>
                 <p className="font-dm-sans text-sm text-ink/80 leading-relaxed mb-4">{quote}</p>
                 <p className="font-dm-sans-bold text-xs text-ink/50">{author}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -219,12 +181,9 @@ export default async function HomePage() {
       {/* ── 7. Pricing ──────────────────────────────────────────── */}
       <PricingSection />
 
-      {/* ── 8. Shipping Countries ────────────────────────────────── */}
-      <ShippingCountries />
-
       {/* ── 9. Final CTA ────────────────────────────────────────── */}
       <section className="bg-pebble py-24 px-4">
-        <div className="max-w-2xl mx-auto text-center">
+        <Reveal className="max-w-2xl mx-auto text-center">
           <h2 className="font-fraunces text-4xl sm:text-6xl text-ink mb-4">
             {t('cta_h2')}
           </h2>
@@ -232,32 +191,8 @@ export default async function HomePage() {
           <Link href="/create" className="btn btn-buy px-10 py-5 text-lg">
             {t('cta_btn')}
           </Link>
-        </div>
+        </Reveal>
       </section>
     </>
-  )
-}
-
-function CharacterGrid() {
-  const chars = ['A','B','C','D','E','F','G','H','I','J','K','L']
-
-  return (
-    <div className="grid grid-cols-4 gap-2 bg-white rounded-2xl p-4">
-      {chars.map(c => (
-        <div
-          key={c}
-          className="relative rounded-xl overflow-hidden bg-pebble border border-ink/10"
-          style={{ aspectRatio: '3/4' }}
-        >
-          <Image
-            src={`/images/characters/png/${c}.png`}
-            alt={`Character ${c}`}
-            fill
-            className="object-contain p-1"
-            sizes="80px"
-          />
-        </div>
-      ))}
-    </div>
   )
 }

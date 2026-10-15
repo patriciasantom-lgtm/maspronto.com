@@ -27,7 +27,6 @@ export default async function TermsPage() {
             <p className="font-dm-sans text-base text-ink/80 leading-relaxed mb-3">{t('s2_intro')}</p>
             <ul className="space-y-2 pl-4">
               <li className="font-dm-sans text-base text-ink/80 leading-relaxed list-disc">{t('s2_li1')}</li>
-              <li className="font-dm-sans text-base text-ink/80 leading-relaxed list-disc">{t('s2_li2')}</li>
             </ul>
           </section>
 

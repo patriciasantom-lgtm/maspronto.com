@@ -53,7 +53,7 @@ export default async function Footer() {
             >
               {t('connect_email')}
             </a>
-            <p className="font-dm-sans text-sm text-mint/50">📦 {t('connect_ships')}</p>
+            <p className="font-dm-sans text-sm text-mint/50">⚡ {t('connect_ships')}</p>
           </div>
         </div>
 

@@ -1,28 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
-import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
+import { DIGITAL_PRICE, fmt } from '@/lib/pricing'
 import StepIndicator from '@/components/StepIndicator'
 import ProductCard from '@/components/ProductCard'
 
 export default function CheckoutPage() {
   const t = useTranslations('checkout')
   const tp = useTranslations('products')
-  const [selected, setSelected] = useState(null)
-  const [region, setRegion] = useState(DEFAULT_REGION)
+  const [selected, setSelected] = useState('digital')
   const router = useRouter()
-
-  useEffect(() => {
-    const stored = localStorage.getItem('prontoRegion')
-    if (stored && REGIONS[stored]) {
-      setRegion(stored)
-    } else {
-      const geo = getGeoRegion()
-      if (geo) setRegion(geo)
-    }
-  }, [])
 
   function handleContinue() {
     if (!selected) return
@@ -30,12 +19,7 @@ export default function CheckoutPage() {
     router.push('/details')
   }
 
-  const r = REGIONS[region]
-  const stickyPrice = selected
-    ? selected === 'digital'
-      ? `${fmt(r.digitalPrice, r.symbol)} ${r.currency.toUpperCase()}`
-      : `${fmt(r.kitTotalPrice, r.symbol)} ${r.currency.toUpperCase()}`
-    : null
+  const stickyPrice = `${fmt(DIGITAL_PRICE.amount, DIGITAL_PRICE.symbol)} ${DIGITAL_PRICE.currency.toUpperCase()}`
 
   return (
     <div className="min-h-screen pb-24">
@@ -47,9 +31,8 @@ export default function CheckoutPage() {
           <p className="font-dm-sans text-ink/60">{t('select_subtitle')}</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-8">
-          <ProductCard type="digital" selected={selected === 'digital'} onSelect={setSelected} />
-          <ProductCard type="kit"     selected={selected === 'kit'}     onSelect={setSelected} />
+        <div className="max-w-sm mx-auto mb-8">
+          <ProductCard type="digital" selected={true} onSelect={() => {}} />
         </div>
 
         {/* Trust row */}
@@ -64,16 +47,11 @@ export default function CheckoutPage() {
       <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur border-t border-ink/10 p-4 z-40">
         <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-dm-sans text-sm text-ink/60">
-            {selected
-              ? selected === 'digital'
-                ? `${tp('digital_name')} · ${stickyPrice}`
-                : `${tp('kit_name')} · ${stickyPrice}`
-              : t('select_to_continue')}
+            {`${tp('digital_name')} · ${stickyPrice}`}
           </p>
           <button
             onClick={handleContinue}
-            disabled={!selected}
-            className={`btn w-full sm:w-auto px-10 py-4 text-lg ${selected ? 'btn-primary' : 'bg-ink/20 text-ink/40 cursor-not-allowed'}`}
+            className="btn w-full sm:w-auto px-10 py-4 text-lg btn-primary"
           >
             {t('next_btn')}
           </button>

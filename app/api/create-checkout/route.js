@@ -1,6 +1,6 @@
 import { stripe } from '@/lib/stripe'
 import { saveJson } from '@/lib/storage'
-import { REGIONS, DEFAULT_REGION } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, DIGITAL_PRICE } from '@/lib/pricing'
 
 export async function POST(request) {
   try {
@@ -34,14 +34,15 @@ export async function POST(request) {
     )
 
     // Line item amount:
-    // - Digital: digitalPrice for the selected region
-    // - Kit: kitProductPrice only (shipping added via shipping_options)
-    const unitAmount = isDigital ? r.digitalPrice : r.kitProductPrice
+    // - Digital: flat DIGITAL_PRICE, same for every buyer worldwide (no regional pricing)
+    // - Kit: kitProductPrice only (shipping added via shipping_options) — dormant, kept for reference
+    const unitAmount = isDigital ? DIGITAL_PRICE.amount : r.kitProductPrice
+    const unitCurrency = isDigital ? DIGITAL_PRICE.currency : r.currency
 
     const lineItems = [
       {
         price_data: {
-          currency: r.currency,
+          currency: unitCurrency,
           unit_amount: unitAmount,
           product_data: {
             name: isDigital ? 'Pronto Path - Digital PDF' : 'Pronto Path - Physical Kit',
@@ -68,7 +69,7 @@ export async function POST(request) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      currency: r.currency,
+      currency: unitCurrency,
       allow_promotion_codes: true,
       customer_email: customer.email,
       success_url: `${siteUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,

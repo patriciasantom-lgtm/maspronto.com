@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from '@/i18n/navigation'
-import { REGIONS, DEFAULT_REGION, fmt, getGeoRegion } from '@/lib/pricing'
+import { REGIONS, DEFAULT_REGION, DIGITAL_PRICE, fmt, getGeoRegion } from '@/lib/pricing'
 import Image from 'next/image'
 import StepIndicator from '@/components/StepIndicator'
 
@@ -100,7 +100,7 @@ export default function DetailsPage() {
   }
 
   const productPrice = product === 'digital'
-    ? `${fmt(r.digitalPrice, r.symbol)} ${r.currency.toUpperCase()}`
+    ? `${fmt(DIGITAL_PRICE.amount, DIGITAL_PRICE.symbol)} ${DIGITAL_PRICE.currency.toUpperCase()}`
     : `${fmt(r.kitTotalPrice, r.symbol)} ${r.currency.toUpperCase()}`
 
   return (
