@@ -45,6 +45,30 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   // null = not yet computed, CSS fallback is used in the meantime
   const [titleLayout, setTitleLayout] = useState(null)
   const previewContainerRef = useRef(null)
+  const previewSectionRef = useRef(null)
+
+  // Mobile scroll hint: on small screens the preview sits below all the
+  // controls, so people don't realise it's there. Show a floating "scroll
+  // down" pill until the preview section first comes into view, then hide
+  // it for good. lg:hidden in the JSX keeps it off on desktop regardless.
+  const [showScrollHint, setShowScrollHint] = useState(false)
+  useEffect(() => {
+    const el = previewSectionRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowScrollHint(false)
+          observer.unobserve(el)
+        } else {
+          setShowScrollHint(true)
+        }
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   useImperativeHandle(ref, () => ({
     getConfig: () => config,
@@ -279,7 +303,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
       </div>
 
       {/* ── Live preview ─────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col items-center gap-3 lg:self-start lg:sticky lg:top-20">
+      <div ref={previewSectionRef} className="flex-1 flex flex-col items-center gap-3 lg:self-start lg:sticky lg:top-20">
         <p className="text-sm font-semibold text-gray-700 self-start lg:self-center">
           {tE('preview')}
         </p>
@@ -346,6 +370,18 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
           {tE('preview_note')}
         </p>
       </div>
+
+      {/* Mobile-only hint pointing people at the live preview below the controls */}
+      {showScrollHint && (
+        <button
+          type="button"
+          onClick={() => previewSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          className="scroll-hint lg:hidden fixed bottom-[180px] left-1/2 z-40 flex items-center gap-2 bg-ink text-lemon font-dm-sans-bold text-sm px-5 py-3 rounded-full shadow-xl"
+        >
+          {tE('scrollHint')}
+          <span className="scroll-hint-arrow">↓</span>
+        </button>
+      )}
     </div>
   )
 })
