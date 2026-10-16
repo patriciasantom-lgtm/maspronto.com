@@ -47,23 +47,16 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const previewContainerRef = useRef(null)
   const previewSectionRef = useRef(null)
 
-  // Mobile scroll hint: on small screens the preview sits below all the
-  // controls, so people don't realise it's there. Show a floating "scroll
-  // down" pill until the preview section first comes into view, then hide
-  // it for good. lg:hidden in the JSX keeps it off on desktop regardless.
+  // Mobile scroll hint: show a floating pill whenever the live preview is
+  // off-screen. Stays active for the component's full lifetime so it works
+  // regardless of which CTA the user arrived from. lg:hidden in the JSX
+  // keeps it off on desktop regardless.
   const [showScrollHint, setShowScrollHint] = useState(false)
   useEffect(() => {
     const el = previewSectionRef.current
     if (!el || typeof IntersectionObserver === 'undefined') return
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowScrollHint(false)
-          observer.unobserve(el)
-        } else {
-          setShowScrollHint(true)
-        }
-      },
+      ([entry]) => { setShowScrollHint(!entry.isIntersecting) },
       { threshold: 0.2 }
     )
     observer.observe(el)
