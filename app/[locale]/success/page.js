@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
@@ -9,17 +9,15 @@ function SuccessContent() {
   const t = useTranslations('success')
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
-  const [product, setProduct] = useState(null)
 
+  // The site is digital-only (no Printful/physical kit) — always show the
+  // download messaging, regardless of any stale/legacy value that might be
+  // sitting in localStorage from before the digital-only pivot.
   useEffect(() => {
-    const p = localStorage.getItem('prontoProduct')
-    setProduct(p)
     localStorage.removeItem('prontoConfig')
     localStorage.removeItem('prontoCanvasUrl')
     localStorage.removeItem('prontoProduct')
   }, [])
-
-  const isDigital = product === 'digital'
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-16">
@@ -29,33 +27,18 @@ function SuccessContent() {
         <h1 className="font-fraunces text-3xl text-ink mb-3">{t('title')}</h1>
 
         <p className="font-dm-sans text-ink/70 text-base mb-6">
-          {isDigital ? (
-            <>
-              {t('digital_msg')}
-              <br /><br />
-              <span className="text-sm text-ink/40">{t('digital_spam')}</span>
-            </>
-          ) : t('kit_msg')}
+          {t('digital_msg')}
+          <br /><br />
+          <span className="text-sm text-ink/40">{t('digital_spam')}</span>
         </p>
 
         {/* What's next */}
         <div className="bg-mint/20 rounded-2xl p-5 text-left mb-6">
           <h3 className="font-dm-sans-bold text-ink text-sm mb-3">{t('whats_next')}</h3>
           <ul className="space-y-2 font-dm-sans text-sm text-ink/70">
-            {isDigital ? (
-              <>
-                <li className="flex items-start gap-2"><span>📧</span> {t('digital_step1')}</li>
-                <li className="flex items-start gap-2"><span>🖨️</span> {t('digital_step2')}</li>
-                <li className="flex items-start gap-2"><span>🖍️</span> {t('digital_step3')}</li>
-              </>
-            ) : (
-              <>
-                <li className="flex items-start gap-2"><span>📧</span> {t('kit_step1')}</li>
-                <li className="flex items-start gap-2"><span>🖨️</span> {t('kit_step2')}</li>
-                <li className="flex items-start gap-2"><span>🚚</span> {t('kit_step3')}</li>
-                <li className="flex items-start gap-2"><span>📦</span> {t('kit_step4')}</li>
-              </>
-            )}
+            <li className="flex items-start gap-2"><span>📧</span> {t('digital_step1')}</li>
+            <li className="flex items-start gap-2"><span>🖨️</span> {t('digital_step2')}</li>
+            <li className="flex items-start gap-2"><span>🖍️</span> {t('digital_step3')}</li>
           </ul>
         </div>
 
