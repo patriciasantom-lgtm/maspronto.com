@@ -217,6 +217,7 @@
     "shipping_days": "entrega en 4-7 días",
     "name_label": "Nombre completo",
     "email_label": "Correo electrónico",
+    "promo_label": "Código de descuento (opcional)",
     "address_title": "Dirección de envío",
     "address_line1": "Calle y número",
     "address_line2": "Unidad / Apt",

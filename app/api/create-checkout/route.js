@@ -5,7 +5,7 @@ import { REGIONS, DEFAULT_REGION, DIGITAL_PRICE } from '@/lib/pricing'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { product, config, customer, address, locale = 'es', region: regionKey = DEFAULT_REGION } = body
+    const { product, config, customer, address, locale = 'es', region: regionKey = DEFAULT_REGION, promoCode } = body
 
     if (!product || !config || !customer?.email || !customer?.name) {
       return Response.json({ error: 'Datos incompletos' }, { status: 400 })
@@ -65,12 +65,44 @@ export async function POST(request) {
       customerEmail: customer.email,
     }
 
+    // Discount codes are validated here (not via Stripe's built-in checkout
+    // field) so a code can be restricted to a specific theme — e.g. a
+    // giveaway code only valid for the Christmas path. Restriction is read
+    // from the promotion code's `restrict_theme` metadata in Stripe.
+    let discounts
+    if (promoCode) {
+      const isEn = locale === 'en'
+      const matches = await stripe.promotionCodes.list({
+        code: promoCode.trim().toUpperCase(),
+        active: true,
+        limit: 1,
+      })
+      const promo = matches.data[0]
+
+      if (!promo) {
+        return Response.json({
+          error: isEn ? 'Invalid or expired discount code' : 'Código de descuento inválido o vencido',
+        }, { status: 400 })
+      }
+
+      const restrictTheme = promo.metadata?.restrict_theme
+      if (restrictTheme && config.theme !== restrictTheme) {
+        return Response.json({
+          error: isEn
+            ? 'This code is only valid for the Christmas path'
+            : 'Este código es válido solo para el Camino de Navidad',
+        }, { status: 400 })
+      }
+
+      discounts = [{ promotion_code: promo.id }]
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
       currency: unitCurrency,
-      allow_promotion_codes: true,
+      ...(discounts ? { discounts } : {}),
       customer_email: customer.email,
       success_url: `${siteUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/${locale}/details`,

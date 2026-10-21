@@ -42,7 +42,7 @@ export default function DetailsPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const [form, setForm] = useState({ name: '', email: '' })
+  const [form, setForm] = useState({ name: '', email: '', promoCode: '' })
 
   useEffect(() => {
     const p = localStorage.getItem('prontoProduct')
@@ -83,6 +83,7 @@ export default function DetailsPage() {
         locale,
         region,
         customer: { name: form.name, email: form.email },
+        promoCode: form.promoCode.trim() || undefined,
       }
 
       const res = await fetch('/api/create-checkout', {
@@ -154,6 +155,7 @@ export default function DetailsPage() {
         <div className="bg-white rounded-2xl shadow-sm border border-ink/10 p-6 space-y-5">
           <Input label={`${t('name_label')} *`} value={form.name}  onChange={v => set('name', v)}  autoComplete="name"  placeholder="María González" />
           <Input label={`${t('email_label')} *`} value={form.email} onChange={v => set('email', v)} autoComplete="email" placeholder="maria@email.com" type="email" />
+          <Input label={t('promo_label')} value={form.promoCode} onChange={v => set('promoCode', v.toUpperCase())} placeholder="ADVIENTO" />
 
           {/* Stripe collects shipping address at payment for all kit orders */}
           {isPhysical && (
