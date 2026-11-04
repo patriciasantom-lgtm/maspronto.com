@@ -140,7 +140,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
   const currentMap  = MAP_THEMES.find(m => m.id === config.theme)
   const isChristmas = currentMap?.days === 24
   const previewSrc  = isChristmas
-    ? '/images/maps/christmaspath/christmas.png'
+    ? '/images/maps/christmaspath/christmas-color.png'
     : `/images/maps/${currentMap?.folder}/${currentMap?.prefix}-${config.character}.png`
 
   return (
@@ -157,7 +157,7 @@ const MapEditor = forwardRef(function MapEditor({ initialTheme } = {}, ref) {
           <div className="grid grid-cols-2 gap-2">
             {MAP_THEMES.map(({ id, folder, prefix }) => {
               const thumbSrc = id === 'christmas'
-                ? '/images/maps/christmaspath/christmas.png'
+                ? '/images/maps/christmaspath/christmas-color.png'
                 : `/images/maps/${folder}/${prefix}-${config.character}.png`
               return (
                 <button
