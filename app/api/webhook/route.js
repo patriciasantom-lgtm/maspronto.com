@@ -1,6 +1,6 @@
 import { stripe } from '@/lib/stripe'
 import { fetchJson, savePdf, savePng } from '@/lib/storage'
-import { generateMapPdfFromConfig, generateMapPngFromConfig } from '@/lib/generateMapPdf'
+import { generateMapPdfFromConfig, generateMapPngFromConfig, COLOR_VARIANT_THEMES } from '@/lib/generateMapPdf'
 import { createPrintfulOrder } from '@/lib/printful'
 import { sendDigitalDownloadEmail, sendDigitalDownloadEmailEn, sendPhysicalOrderEmail } from '@/lib/email'
 import { v4 as uuidv4 } from 'uuid'
@@ -52,16 +52,24 @@ async function fulfillOrder(session) {
   const mapPdfBuffer = await generateMapPdfFromConfig(config)
   const mapFileUrl = await savePdf(mapPdfBuffer, `map-${orderId}.pdf`)
 
+  // Some themes (currently only Christmas/Advent) also ship a full-color
+  // version alongside the default black-and-white one.
+  let mapFileUrlColor = null
+  if (COLOR_VARIANT_THEMES.has(config.theme)) {
+    const colorPdfBuffer = await generateMapPdfFromConfig({ ...config, variant: 'color' })
+    mapFileUrlColor = await savePdf(colorPdfBuffer, `map-${orderId}-color.pdf`)
+  }
+
   const emailFn = locale === 'en' ? sendDigitalDownloadEmailEn : sendDigitalDownloadEmail
 
   if (product === 'digital') {
-    await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl })
+    await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl, downloadUrlColor: mapFileUrlColor })
     console.log(`Digital order ${orderId} fulfilled — email sent to ${customerEmail}`)
     return
   }
 
   // Physical Kit: send PDF digital immediately, then branch on country
-  await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl })
+  await emailFn({ to: customerEmail, name: customerName, downloadUrl: mapFileUrl, downloadUrlColor: mapFileUrlColor })
   console.log(`Physical kit PDF sent to ${customerEmail}`)
 
   // Stripe API 2026-06-24.dahlia moved shipping address to collected_information.shipping_details
